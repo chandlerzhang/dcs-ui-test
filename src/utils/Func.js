@@ -85,7 +85,7 @@ export function genPlKey(pl) {
  * @returns {{renderData: XML 渲染对象, comps: Array 活动对象}}
  */
 export function headerRenderData(props) {
-  const {currBlock, currActive, regComps} = props
+  const {currBlock, currActive} = props
   const isMenuBlock = currBlock == C.TOPMENU_BLOCK
   const isInputActive = currActive == C.CMD_INPUT
   const input = <Input placeholder="input here" style={{width: '100%'}}
@@ -152,7 +152,6 @@ export function headerRenderData(props) {
   })
 
   //注册组件
-  // regComps(comps, C.TOPMENU_BLOCK)
 
   const renderData = <div>
     <Row>
@@ -217,4 +216,39 @@ export function headerRenderData(props) {
     renderData,
     comps
   }
+}
+
+export function genSelectKey(type, i) {
+
+  return `select-${type}-${i}`
+}
+
+export function getPageInfoField(type) {
+  let pageInfo;
+
+  switch (type) {
+
+    case C.PSELECT_TYPE_FLIGHT:
+      pageInfo = {
+        currPageField: 'flightSwitchCurrPage',
+        pageNumField: 'flightSwitchPageNum'
+      }
+      break
+    case C.PSELECT_TYPE_BUTTON:
+      pageInfo = {
+        currPageField: 'passengerOperationCurrPage',
+        pageNumField: 'passengerOperationPageNum'
+      }
+      break
+    case C.PSELECT_TYPE_PASSENGER:
+      pageInfo = {
+        currPageField: 'passengerSelectCurrPage',
+        pageNumField: 'passengerSelectPageNum'
+      }
+      break
+    default:
+      throw new Error(`unsupported type ${type}`)
+  }
+
+  return pageInfo
 }

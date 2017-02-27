@@ -13,35 +13,10 @@ import * as F from '../utils/Func'
 
 class Content extends React.Component {
 
-  constructor() {
-    super()
-    this.comps = {}
-  }
-
   static genPlKey(pl) {
     return F.genPlKey(pl)
   }
 
-  regComps(list, block) {
-
-    block = block || C.MAIN_BLOCK
-
-    const isMainBlock = block == C.MAIN_BLOCK
-    let comps;
-    if (isMainBlock) {
-      comps = [...list, C.CMD_INPUT]
-    } else {
-      comps = [...list]
-    }
-    this.comps[block] = comps
-  }
-
-  getComps(block) {
-
-    const {currBlock} = this.props.content
-    block = block || currBlock
-    return this.comps[block]
-  }
 
   componentDidUpdate() {
     F.focusActive()
@@ -49,7 +24,7 @@ class Content extends React.Component {
 
   render() {
     const {content, dispatch} = this.props
-    const {pls, fls, selectPls, loading, token, currBlock, currActive} = content
+    const {pls, fls, selectPls, loading, token, currBlock, currActive, flightSwitchPageNum, flightSwitchCurrPage, passengerSelectPageNum, passengerSelectCurrPage, passengerOperationPageNum, passengerOperationCurrPage} = content
     const isLogin = token && token.user
 
     const columns = [
@@ -96,19 +71,24 @@ class Content extends React.Component {
       },
     }
 
+    const onPrev = (t)=> {
+      dispatch({type: 'content/onPrev', pselectType: t})
+    }
+    const onNext = (t)=> {
+      dispatch({type: 'content/onNext', pselectType: t})
+    }
+
     const passengerSelectProps = {
       label: '已选旅客（F4）',
       type: C.PSELECT_TYPE_PASSENGER,
       list: selectPls,
-      regComps: this.regComps.bind(this),
       onClose: (pl)=> {
         dispatch({type: 'content/unselect', record: pl})
-      }, currBlock, currActive
+      }, currBlock, currActive, passengerSelectCurrPage, passengerSelectPageNum, onPrev, onNext
     }
     const passengerOprProps = {
       label: '旅客操作（F5）',
       type: C.PSELECT_TYPE_BUTTON,
-      regComps: this.regComps.bind(this),
       list: [{
         text: '值机',
         onClick: ()=> {
@@ -117,7 +97,7 @@ class Content extends React.Component {
         text: '候补',
         onClick: ()=> {
         }
-      }], currBlock, currActive
+      }], currBlock, currActive, passengerOperationCurrPage, passengerOperationPageNum, onPrev, onNext
     }
 
     const fSwitchProps = {
@@ -125,7 +105,6 @@ class Content extends React.Component {
       type: C.PSELECT_TYPE_FLIGHT,
       list: fls,
       currFl: token ? token.fl : null,
-      regComps: this.regComps.bind(this),
       onClose(pl){
         if (fls.length === 1) {
           message.error('当前仅有一个航班，不能关闭！')
@@ -135,70 +114,60 @@ class Content extends React.Component {
       },
       onAdd(){
 
-      }, currBlock, currActive
-    }
-
-    const eventProps = {
-      getComps: this.getComps.bind(this),
-      dispatch, currBlock, currActive,
+      }, currBlock, currActive, flightSwitchCurrPage, flightSwitchPageNum, onPrev, onNext
     }
 
     const headerProps = {
-      regComps: this.regComps.bind(this),
       currBlock, currActive,
     }
 
     if (isLogin) {
 
-      this.regComps(pls.map(pl=>Content.genPlKey(pl)))
+      return <div className="dcs-main">
+        <div className="dcs-header">
 
-      return <EventHandler {...eventProps}>
-        <div className="dcs-main">
-          <div className="dcs-header">
-
-            <Header {...headerProps}/>
-          </div>
-          <div className="dcs-center">
-            {fls && fls.length > 0 ? <PSelect {...fSwitchProps}/> : null}
-            <FStatus fl={token.fl}/>
-            {selectPls && selectPls.length > 0 ? <PSelect {...passengerSelectProps} /> : null}
-            <PSelect {...passengerOprProps} />
-            <Table className="dcs-pl-table"
-                   title={(o)=> <span><span className="dcs-circle">i</span>共<span
-                     className="dcs-pl-table-num">{pls.length}</span>条旅客数据，已选择<span
-                     className="dcs-pl-table-num">{selectPls.length}</span>条</span>}
-                   rowKey={pl=>Content.genPlKey(pl)}
-                   rowSelection={rowSelection}
-                   columns={columns}
-                   pagination={false}
-                   dataSource={pls}
-                   onRowClick={(record)=> {
-
-                     const isSelected = selectPls.some(pl=>pl.uui == record.uui)
-                     if (isSelected) {
-                       dispatch({type: 'content/select', record: record})
-                     } else {
-                       dispatch({type: 'content/unselect', record: record})
-                     }
-                   }}
-                   expandedRowKeys={[currActive || '']}
-                   expandedRowRender={r=> {
-                     const pDetailProps = {
-                       pl: r
-                     }
-                     return <PDetail {...pDetailProps} />
-                   }}
-                   rowClassName={(r)=> {
-                     return F.getActiveCls(currActive == Content.genPlKey(r))
-                   }}
-                   scroll={{y: 400}}/>
-          </div>
-          <div className="dcs-footer">
-            <Footer/>
-          </div>
-
+          <Header {...headerProps}/>
         </div>
-      </EventHandler>
+        <div className="dcs-center">
+          {fls && fls.length > 0 ? <PSelect {...fSwitchProps}/> : null}
+          <FStatus fl={token.fl}/>
+          {selectPls && selectPls.length > 0 ? <PSelect {...passengerSelectProps} /> : null}
+          <PSelect {...passengerOprProps} />
+          <Table className="dcs-pl-table"
+                 title={(o)=> <span><span className="dcs-circle">i</span>共<span
+                   className="dcs-pl-table-num">{pls.length}</span>条旅客数据，已选择<span
+                   className="dcs-pl-table-num">{selectPls.length}</span>条</span>}
+                 rowKey={pl=>Content.genPlKey(pl)}
+                 rowSelection={rowSelection}
+                 columns={columns}
+                 pagination={false}
+                 dataSource={pls}
+                 onRowClick={(record)=> {
+
+                   const isSelected = selectPls.some(pl=>pl.uui == record.uui)
+                   if (isSelected) {
+                     dispatch({type: 'content/select', record: record})
+                   } else {
+                     dispatch({type: 'content/unselect', record: record})
+                   }
+                 }}
+                 expandedRowKeys={[currActive || '']}
+                 expandedRowRender={r=> {
+                   const pDetailProps = {
+                     pl: r
+                   }
+                   return <PDetail {...pDetailProps} />
+                 }}
+                 rowClassName={(r)=> {
+                   return F.getActiveCls(currActive == Content.genPlKey(r))
+                 }}
+                 scroll={{y: 400}}/>
+        </div>
+        <div className="dcs-footer">
+          <Footer/>
+        </div>
+
+      </div>
     } else {
       const loginProps = {
         onLogin(){
@@ -220,6 +189,12 @@ Content.PropTypes = {
   currBlock: React.PropTypes.string,
   currActive: React.PropTypes.string,
   comps: React.PropTypes.object,
+  flightSwitchPageNum: React.PropTypes.number,
+  flightSwitchCurrPage: React.PropTypes.number,
+  passengerSelectPageNum: React.PropTypes.number,
+  passengerSelectCurrPage: React.PropTypes.number,
+  passengerOperationPageNum: React.PropTypes.number,
+  passengerOperationCurrPage: React.PropTypes.number,
 }
 
 export default connect(({content})=> {

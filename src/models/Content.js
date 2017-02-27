@@ -14,7 +14,16 @@ export default {
     selectPls: [],//selected passenger list
     currBlock: C.MAIN_BLOCK,//current active block
     currActive: C.CMD_INPUT,//current active item
-    comps: {}
+    comps: {},
+
+    flightSwitchPageNum: 8,
+    flightSwitchCurrPage: 1,
+
+    passengerSelectPageNum: 10,
+    passengerSelectCurrPage: 1,
+
+    passengerOperationPageNum: 8,
+    passengerOperationCurrPage: 1,
   },
 
   subscriptions: {
@@ -73,6 +82,106 @@ export default {
         return Object.assign({}, state, ret)
       } else {
         console.error(`event func[${fn}] not found!`)
+      }
+
+      return state
+    },
+    onNext(state, {pselectType}){
+      const {currPageField, pageNumField} = F.getPageInfoField(pselectType)
+
+      let list;
+      let currPage = state[currPageField]
+      let pageNum = state[pageNumField]
+
+      switch (pselectType) {
+        case C.PSELECT_TYPE_PASSENGER:
+          list = state.selectPls
+          break
+        case C.PSELECT_TYPE_BUTTON:
+          list = []
+          break
+        case C.PSELECT_TYPE_FLIGHT:
+          list = state.fls
+          break
+      }
+      if (list) {
+        const allNum = list.length
+        const allPage = allNum % pageNum == 0 ? allNum / pageNum : Math.floor(allNum / pageNum) + 1
+        if (currPage < allPage) {
+          let newS = {
+            ...state,
+            [currPageField]: currPage + 1
+          }
+
+          //活动元素（comps）需要重新计算，直接调用keyEvent中定义的方法
+          let newS2
+          switch (pselectType) {
+            case C.PSELECT_TYPE_PASSENGER:
+              newS2 = Evt.f4Fn(newS)
+              break
+            case C.PSELECT_TYPE_BUTTON:
+
+              break
+            case C.PSELECT_TYPE_FLIGHT:
+              newS2 = Evt.f2Fn(newS)
+              break
+          }
+          return {
+            ...newS,
+            comps: newS2.comps
+          }
+        }
+      }
+
+      return state
+    },
+    onPrev(state, {pselectType}){
+
+      const {currPageField, pageNumField} = F.getPageInfoField(pselectType)
+
+      let list;
+      let currPage = state[currPageField]
+      let pageNum = state[pageNumField]
+
+      switch (pselectType) {
+        case C.PSELECT_TYPE_PASSENGER:
+          list = state.selectPls
+          break
+        case C.PSELECT_TYPE_BUTTON:
+          list = []
+          break
+        case C.PSELECT_TYPE_FLIGHT:
+          list = state.fls
+          break
+      }
+      if (list) {
+        const allNum = list.length
+        const allPage = allNum % pageNum == 0 ? Math.floor(allNum / pageNum) : Math.floor(allNum / pageNum) + 1
+
+        if (currPage > 1) {
+          let newS = {
+            ...state,
+            [currPageField]: currPage - 1
+          }
+
+          //活动元素（comps）需要重新计算，直接调用keyEvent中定义的方法
+          let newS2
+          switch (pselectType) {
+            case C.PSELECT_TYPE_PASSENGER:
+              newS2 = Evt.f4Fn(newS)
+              break
+            case C.PSELECT_TYPE_BUTTON:
+
+              break
+            case C.PSELECT_TYPE_FLIGHT:
+              newS2 = Evt.f2Fn(newS)
+              break
+          }
+          return {
+            ...newS,
+            comps: newS2.comps
+          }
+        }
       }
 
       return state

@@ -3,6 +3,104 @@ import * as C from './Const'
 import {message} from 'antd'
 
 export default {
+  f5Fn(state, event) {
+
+  },
+  f4Fn(state, event) {
+
+    // if (state.currBlock === C.PSELECT_BLOCK) {
+    //   return state
+    // }
+
+    const pls = state.selectPls
+    if (pls.length == 0) {
+      message.error('没有可选的对象！');
+      return
+    }
+
+    const pageNum = state.passengerSelectPageNum
+    const currPage = state.passengerSelectCurrPage
+    const allNum = pls.length
+    const allPage = allNum % pageNum == 0 ? allNum / pageNum : Math.floor(allNum / pageNum) + 1
+    let comps = []
+    for (let i = 0; i < allNum; i++) {
+      const st = (currPage - 1) * pageNum
+      const ed = currPage * pageNum
+      if (i >= st && i < ed) {
+        comps.push(F.genSelectKey(C.PSELECT_TYPE_PASSENGER, i))
+      }
+    }
+
+    if (currPage > 1) {
+      comps = [C.PREV_BTN_KEY, ...comps]
+    }
+    if (currPage < allPage) {
+      comps.push(C.NEXT_BTN_KEY)
+    }
+    const currActive = comps[0]
+    comps = {
+      ...state.comps,
+      [C.PSELECT_BLOCK]: comps
+    }
+
+    return {
+      ...state,
+      currBlock: C.PSELECT_BLOCK,
+      comps,
+      currActive
+    }
+
+  },
+  f2Fn(state, event) {
+
+    // if (state.currBlock === C.FLIGHTSWITCH_BLOCK) {
+    //   return state
+    // }
+
+    const {fls} = state
+    if (!(fls instanceof Array)) {
+      console.log(`fls must be Array`)
+      return
+    }
+    if (fls.length == 0) {
+      message.error(`没有可选的对象`)
+      return
+    }
+    const pageNum = state.flightSwitchPageNum
+    const currPage = state.flightSwitchCurrPage
+    const allNum = fls.length
+    const allPage = allNum % pageNum == 0 ? allNum / pageNum : Math.floor(allNum / pageNum) + 1
+
+    let comps = []
+    for (let i = 0; i < allNum; i++) {
+      const st = (currPage - 1) * pageNum
+      const ed = currPage * pageNum
+      if (i >= st && i < ed) {
+        comps.push(F.genSelectKey(C.PSELECT_TYPE_FLIGHT, i))
+      }
+    }
+
+    if (currPage > 1) {
+      comps = [C.PREV_BTN_KEY, ...comps]
+    }
+    if (currPage < allPage) {
+      comps.push(C.NEXT_BTN_KEY)
+    }
+    comps.push(C.FLIGHTADD_BTN_KEY)
+    const currActive = comps[0]
+
+    comps = {
+      ...state.comps,
+      [C.FLIGHTSWITCH_BLOCK]: comps
+    }
+
+    return {
+      ...state,
+      currBlock: C.FLIGHTSWITCH_BLOCK,
+      comps,
+      currActive
+    }
+  },
   escFn(state, event) {
 
     return {

@@ -11,6 +11,15 @@ export default [{
   isMatch: (e)=>e.which == 112,
   funcName: 'f1Fn'
 },{
+  isMatch: (e)=>e.which == 113,
+  funcName: 'f2Fn'
+},{
   isMatch: (e)=>e.which == 27,
   funcName: 'escFn'
+},{
+  isMatch: (e)=>e.which == 115,
+  funcName: 'f4Fn'
+},{
+  isMatch: (e)=>e.which == 116,
+  funcName: 'f5Fn'
 }]
