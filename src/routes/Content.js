@@ -19,7 +19,7 @@ class Content extends React.Component {
   }
 
   static genPlKey(pl) {
-    return 'pl-list-' + pl.uui
+    return F.genPlKey(pl)
   }
 
   regComps(list, block) {
@@ -219,6 +219,7 @@ Content.PropTypes = {
   selectPls: React.PropTypes.array,
   currBlock: React.PropTypes.string,
   currActive: React.PropTypes.string,
+  comps: React.PropTypes.object,
 }
 
 export default connect(({content})=> {

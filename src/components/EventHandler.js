@@ -39,7 +39,7 @@ export default class EventHandler extends React.Component {
 
   componentWillMount() {
 
-    window.addEventListener('keydown', this.handle.bind(this))
+    // window.addEventListener('keydown', this.handle.bind(this))
 
     this.addListener('Down', (e)=>e.which == 40 || e.which == 39 || (e.which == 9 && !e.shiftKey), this.downFn.bind(this))
     this.addListener('Up', (e)=>e.which == 38 || e.which == 37 || (e.which == 9 && e.shiftKey), this.upFn.bind(this))
@@ -50,7 +50,7 @@ export default class EventHandler extends React.Component {
   }
 
   componentWillUnmount() {
-    window.removeEventListener('keydown')
+    // window.removeEventListener('keydown')
   }
 
   render() {
