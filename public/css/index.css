@@ -1,6 +1,7 @@
-body{
+body {
   overflow: hidden;
 }
+
 #root {
   margin: auto 10px;
 }
@@ -13,10 +14,12 @@ body{
   margin: 5px auto;
   height: 10%;
 }
-.dcs-header .ant-menu-horizontal{
+
+.dcs-header .ant-menu-horizontal {
   border: none;
 }
-.dcs-header .ant-menu-submenu-title{
+
+.dcs-header .ant-menu-submenu-title {
   padding-left: 0px;
 }
 
@@ -31,15 +34,18 @@ body{
 .header-autocomplete {
   margin-top: 6px;
 }
-.header-otherinfo{
+
+.header-otherinfo {
   padding-top: 15px;
   padding-left: 15px !important;
 }
-.header-scroll-title{
+
+.header-scroll-title {
   font-size: 1.3em;
   font-weight: bold;
 }
-.header-scroll-title img{
+
+.header-scroll-title img {
   margin-right: 10px;
 }
 
@@ -50,12 +56,14 @@ body{
 .dcs-footer {
   /*height: 6%;*/
 }
-.dcs-footer-title{
+
+.dcs-footer-title {
   font-size: 1.5em;
   font-weight: bold;
   margin-right: 30px;
 }
-.dcs-footer button{
+
+.dcs-footer button {
   margin-right: 15px;
 }
 
@@ -122,7 +130,7 @@ body{
   border-bottom: solid 1px black;
 }
 
-.dcs-pselect-item-curr{
+.dcs-pselect-item-curr {
   font-weight: bold;
   color: rgb(16, 142, 233);
   border-bottom: solid 2px rgb(16, 142, 233);
@@ -170,19 +178,26 @@ body{
   color: turquoise;
 }
 
-.dcs-squar{
+.dcs-squar {
   padding: 2px 4px;
-  border: solid 1px rgb(244,244,244);
-  background-color: rgb(244,244,244);
+  border: solid 1px rgb(244, 244, 244);
+  background-color: rgb(244, 244, 244);
 }
 
-.dcs-active{
+.dcs-active {
   border: solid 2px green !important;
 }
 
-.dcs-active td{
+.dcs-active td {
   border-top: solid 2px green !important;
   border-bottom: solid 2px green !important;
-  background-color: rgb(236,246,253);
+  background-color: rgb(236, 246, 253);
+}
+
+.add-passenger-header {
+  font-size: 1.4em;
+  font-weight: bold;
+  text-align: center;
+  padding-top: 20px;
 }
 

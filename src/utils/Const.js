@@ -17,3 +17,14 @@ export const FLIGHTADD_BTN_KEY = 'FLIGHTADD_BTN_KEY'
 
 
 export const PAGE_PASSENGER_LIST = 'PAGE_PASSENGER_LIST'
+export const PAGE_ADD_PASSENGER = 'PAGE_ADD_PASSENGER'
+
+
+export const SUBMIT_BTN_KEY = 'SUBMIT_BTN_KEY'
+
+export const PADD_CN_KEY = 'PADD_CN_KEY'
+export const PADD_SEX1_KEY = 'PADD_SEX1_KEY'
+export const PADD_SEX2_KEY = 'PADD_SEX2_KEY'
+export const PADD_SEX3_KEY = 'PADD_SEX3_KEY'
+export const PADD_DN_KEY = 'PADD_DN_KEY'
+export const PADD_ETI_KEY = 'PADD_ETI_KEY'

@@ -70,6 +70,10 @@ export default {
   },
 
   reducers: {
+    addPassenger(state){
+
+      return Evt.ctrlBFn(state)
+    },
     eventHandler(state, {handler}){
 
       const {fn, event} = handler

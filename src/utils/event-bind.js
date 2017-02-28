@@ -22,4 +22,7 @@ export default [{
 },{
   isMatch: (e)=>e.which == 116,
   funcName: 'f5Fn'
+},{
+  isMatch: (e)=>e.which == 66 && e.ctrlKey,
+  funcName: 'ctrlBFn'
 }]

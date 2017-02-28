@@ -3,6 +3,14 @@ import * as C from './Const'
 import {message} from 'antd'
 
 export default {
+  ctrlBFn(state, event) {
+
+    const comps = []
+    return {
+      ...state,
+      pageName: C.PAGE_ADD_PASSENGER
+    }
+  },
   f5Fn(state, event) {
 
     const btns = F.getOperationBtns(state)

@@ -82,6 +82,9 @@ export function stopEvent(e) {
   e.stopImmediatePropagation()
 }
 
+/**
+ * 将焦点置于active元素
+ */
 export function focusActive() {
   const active = $('.dcs-active')
   const selector = 'input,a,button'
@@ -271,7 +274,7 @@ export function getPageInfoField(type) {
   return pageInfo
 }
 
-export function getOperationBtns(state) {
+export function getOperationBtns(state,dispatch) {
 
   let btns = []
 
@@ -296,6 +299,7 @@ export function getOperationBtns(state) {
         text: '候补',
         enable: true,
         onClick(){
+          dispatch({type:'content/addPassenger'})
         }
       }, {
         text: '电子客票',
