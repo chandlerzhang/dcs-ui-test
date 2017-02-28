@@ -14,6 +14,7 @@ export default {
     selectPls: [],//selected passenger list
     currBlock: C.MAIN_BLOCK,//current active block
     currActive: C.CMD_INPUT,//current active item
+    pageName: C.PAGE_PASSENGER_LIST,//current page name
     comps: {},
 
     flightSwitchPageNum: 8,
@@ -98,7 +99,7 @@ export default {
           list = state.selectPls
           break
         case C.PSELECT_TYPE_BUTTON:
-          list = []
+          list = F.getOperationBtns(state)
           break
         case C.PSELECT_TYPE_FLIGHT:
           list = state.fls
@@ -120,15 +121,15 @@ export default {
               newS2 = Evt.f4Fn(newS)
               break
             case C.PSELECT_TYPE_BUTTON:
-
+              newS2 = Evt.f5Fn(newS)
               break
             case C.PSELECT_TYPE_FLIGHT:
               newS2 = Evt.f2Fn(newS)
               break
           }
           return {
-            ...newS,
-            comps: newS2.comps
+            ...newS2,
+            currActive: newS.currActive
           }
         }
       }
@@ -148,7 +149,7 @@ export default {
           list = state.selectPls
           break
         case C.PSELECT_TYPE_BUTTON:
-          list = []
+          list = F.getOperationBtns(state)
           break
         case C.PSELECT_TYPE_FLIGHT:
           list = state.fls
@@ -171,15 +172,15 @@ export default {
               newS2 = Evt.f4Fn(newS)
               break
             case C.PSELECT_TYPE_BUTTON:
-
+              newS2 = Evt.f5Fn(newS)
               break
             case C.PSELECT_TYPE_FLIGHT:
               newS2 = Evt.f2Fn(newS)
               break
           }
           return {
-            ...newS,
-            comps: newS2.comps
+            ...newS2,
+            currActive: newS.currActive
           }
         }
       }

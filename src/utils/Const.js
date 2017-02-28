@@ -14,3 +14,6 @@ export const CMD_INPUT = 'cmdInput'
 export const PREV_BTN_KEY = 'PREV_BTN_KEY'
 export const NEXT_BTN_KEY = 'NEXT_BTN_KEY'
 export const FLIGHTADD_BTN_KEY = 'FLIGHTADD_BTN_KEY'
+
+
+export const PAGE_PASSENGER_LIST = 'PAGE_PASSENGER_LIST'

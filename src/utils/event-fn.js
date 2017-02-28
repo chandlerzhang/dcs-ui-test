@@ -5,6 +5,42 @@ import {message} from 'antd'
 export default {
   f5Fn(state, event) {
 
+    const btns = F.getOperationBtns(state)
+    if (!btns || btns.length == 0) {
+      message.error('没有可选的组件')
+      return state
+    }
+    const pageNum = state.passengerOperationPageNum
+    const currPage = state.passengerOperationCurrPage
+    const allNum = btns.length
+    const allPage = allNum % pageNum == 0 ? allNum / pageNum : Math.floor(allNum / pageNum) + 1
+    let comps = []
+    for (let i = 0; i < allNum; i++) {
+      const st = (currPage - 1) * pageNum
+      const ed = currPage * pageNum
+      if (i >= st && i < ed) {
+        comps.push(F.genSelectKey(C.PSELECT_TYPE_BUTTON, i))
+      }
+    }
+
+    if (currPage > 1) {
+      comps = [C.PREV_BTN_KEY, ...comps]
+    }
+    if (currPage < allPage) {
+      comps.push(C.NEXT_BTN_KEY)
+    }
+    const currActive = comps[0]
+    comps = {
+      ...state.comps,
+      [C.OPERATION_BLOCK]: comps
+    }
+
+    return {
+      ...state,
+      currBlock: C.OPERATION_BLOCK,
+      comps,
+      currActive
+    }
   },
   f4Fn(state, event) {
 

@@ -7,7 +7,6 @@ import Login from '../components/Login'
 import PDetail from '../components/PDetail'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
-import EventHandler from '../components/EventHandler'
 import * as C from '../utils/Const'
 import * as F from '../utils/Func'
 
@@ -89,15 +88,7 @@ class Content extends React.Component {
     const passengerOprProps = {
       label: '旅客操作（F5）',
       type: C.PSELECT_TYPE_BUTTON,
-      list: [{
-        text: '值机',
-        onClick: ()=> {
-        }
-      }, {
-        text: '候补',
-        onClick: ()=> {
-        }
-      }], currBlock, currActive, passengerOperationCurrPage, passengerOperationPageNum, onPrev, onNext
+      list: F.getOperationBtns(content), currBlock, currActive, passengerOperationCurrPage, passengerOperationPageNum, onPrev, onNext
     }
 
     const fSwitchProps = {
@@ -188,6 +179,7 @@ Content.PropTypes = {
   selectPls: React.PropTypes.array,
   currBlock: React.PropTypes.string,
   currActive: React.PropTypes.string,
+  pageName: React.PropTypes.string,
   comps: React.PropTypes.object,
   flightSwitchPageNum: React.PropTypes.number,
   flightSwitchCurrPage: React.PropTypes.number,

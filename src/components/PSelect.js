@@ -1,5 +1,5 @@
 import React from 'react'
-import {Row, Col, Button} from 'antd'
+import {Row, Col, Button, message} from 'antd'
 import * as C from '../utils/Const'
 import * as F from '../utils/Func'
 
@@ -76,8 +76,15 @@ export default class PSelect extends React.Component {
             </a></span>)
             break
           case C.PSELECT_TYPE_BUTTON:
-            items.push(<span key={k} className={F.getActiveCls(isActive, 'dcs-pselect-item-button')}><Button
-              onClick={pl.onClick}>{pl.text}</Button></span>)
+            let btn = <Button onClick={pl.onClick}>{pl.text}</Button>
+            if (!pl.enable) {
+              btn = <Button className="disabled" onClick={()=> {
+                if (pl.errmsg) {
+                  message.error(pl.errmsg)
+                }
+              }}>{pl.text}</Button>
+            }
+            items.push(<span key={k} className={F.getActiveCls(isActive, 'dcs-pselect-item-button')}>{btn}</span>)
             break
           case C.PSELECT_TYPE_FLIGHT:
             const isCurr = currFl && pl.uui === currFl.uui
