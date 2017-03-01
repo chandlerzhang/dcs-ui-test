@@ -10,6 +10,8 @@ import PList from '../components/PList'
 import PAdd from '../components/PAdd'
 import Mphone from '../components/Mphone'
 import PStop from '../components/PStop'
+import SeatMap from '../components/SeatMap'
+import Checkin from '../components/Checkin'
 import * as C from '../utils/Const'
 import * as F from '../utils/Func'
 
@@ -82,6 +84,18 @@ class Content extends React.Component {
           selectPls, currActive, currBlock, pageName
         }
         return <PStop {...stopPlProps}/>
+
+      case C.PAGE_SEATMAP:
+
+        const seatMapProps = {}
+        return <SeatMap {...seatMapProps}/>
+
+      case C.PAGE_CHECKIN:
+
+        const checkinProps = {
+          currActive, currBlock, pageName
+        }
+        return <Checkin {...checkinProps}/>
 
     }
   }

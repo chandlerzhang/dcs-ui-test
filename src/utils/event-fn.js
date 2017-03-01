@@ -3,6 +3,48 @@ import * as C from './Const'
 import {message} from 'antd'
 
 export default {
+  enterFn(state, event) {
+
+    const {currActive, currBlock, pageName, selectPls, comps} = state
+
+    const canCheckin = pageName === C.PAGE_PASSENGER_LIST && currBlock === C.MAIN_BLOCK && selectPls.some(pl=>!pl.wci) && currActive !== C.CMD_INPUT
+
+    if (canCheckin) {
+
+      if (event) {
+        F.stopEvent(event)
+      }
+
+      const newComps = [C.CHECKIN_FROM_KEY, C.CHECKIN_TO_KEY, C.CHECKIN_NOPRINT_KEY, C.SUBMIT_BTN_KEY, C.CMD_INPUT]
+      const comps = {
+        ...state.comps,
+        [C.MAIN_BLOCK]: newComps
+      }
+      return {
+        ...state,
+        pageName: C.PAGE_CHECKIN,
+        comps,
+        currActive: newComps[0]
+      }
+    }
+
+    return state
+  },
+  altDFn(state, event) {
+
+    const newComps = [C.CMD_INPUT]
+    const comps = {
+      ...state.comps,
+      [C.MAIN_BLOCK]: newComps
+    }
+    return {
+      ...state,
+      pageName: C.PAGE_SEATMAP,
+      comps,
+      currActive: newComps[0],
+      currBlock: C.MAIN_BLOCK,
+    }
+  },
   altPFn(state, event) {
 
     const {selectPls} = state
