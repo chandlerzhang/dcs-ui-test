@@ -20,7 +20,7 @@ class Content extends React.Component {
   renderMain() {
 
     const {content, dispatch} = this.props
-    const {pageName, token, currActive} = content
+    const {pageName, token, currActive,currBlock} = content
     switch (pageName) {
 
       case C.PAGE_PASSENGER_LIST:
@@ -54,7 +54,7 @@ class Content extends React.Component {
 
         const pAddProps = {
           dss: [token.fl.ars],
-          currActive
+          currActive,currBlock
         }
         return <PAdd {...pAddProps} />
 

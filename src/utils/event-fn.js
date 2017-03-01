@@ -5,10 +5,18 @@ import {message} from 'antd'
 export default {
   ctrlBFn(state, event) {
 
-    const comps = []
+    const newComps = [C.PADD_CN_KEY, C.PADD_SEX1_KEY, C.PADD_SEX2_KEY, C.PADD_SEX3_KEY, C.PADD_DN_KEY, C.PADD_ETI_KEY, C.SUBMIT_BTN_KEY, C.CMD_INPUT]
+
+    const comps = {
+      ...state.comps,
+      [C.MAIN_BLOCK]: newComps
+    }
     return {
       ...state,
-      pageName: C.PAGE_ADD_PASSENGER
+      pageName: C.PAGE_ADD_PASSENGER,
+      comps,
+      currActive: newComps[0],
+      currBlock: C.MAIN_BLOCK,
     }
   },
   f5Fn(state, event) {
@@ -147,10 +155,27 @@ export default {
   },
   escFn(state, event) {
 
+    const {pageName, currActive} = state
+
+    if (pageName !== C.PAGE_PASSENGER_LIST && currActive !== C.CMD_INPUT) {
+      return {
+        ...state,
+        currBlock: C.MAIN_BLOCK,
+        currActive: C.CMD_INPUT,
+      }
+    }
+
+    const newComps = state.pls.map(pl=>F.genPlKey(pl))
+    const comps = {
+      ...state.comps,
+      [C.MAIN_BLOCK]: newComps
+    }
     return {
       ...state,
       currBlock: C.MAIN_BLOCK,
-      currActive: C.CMD_INPUT
+      currActive: C.CMD_INPUT,
+      pageName: C.PAGE_PASSENGER_LIST,
+      comps,
     }
   },
   f1Fn(state, event) {

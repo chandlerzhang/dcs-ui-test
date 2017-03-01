@@ -19,11 +19,11 @@ export default class PAdd extends React.Component {
   render() {
     const {dss, currActive, currBlock} = this.props
 
-    const isCurrPage = currBlock === C.PAGE_ADD_PASSENGER
+    const isCurrPage = currBlock === C.MAIN_BLOCK
     let dsField;
     if (dss.length == 1) {
       dsField = <RadioGroup>
-        <Radio value={dsField[0]} checked>{dsField[0]}</Radio>
+        <Radio value={dss[0]} checked>{dss[0]}</Radio>
       </RadioGroup>
     } else {
       dsField = <RadioGroup>
