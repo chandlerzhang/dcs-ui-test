@@ -25,6 +25,11 @@ export default {
 
     passengerOperationPageNum: 8,
     passengerOperationCurrPage: 1,
+
+    confirm: {
+      show: false,
+      content:''
+    }
   },
 
   subscriptions: {
@@ -70,6 +75,24 @@ export default {
   },
 
   reducers: {
+    setEt(state){
+
+      return Evt.altOFn(state)
+    },
+    checkin(state){
+
+      const newComps = [C.CHECKIN_FROM_KEY, C.CHECKIN_TO_KEY, C.CHECKIN_NOPRINT_KEY, C.SUBMIT_BTN_KEY, C.CMD_INPUT]
+      const comps = {
+        ...state.comps,
+        [C.MAIN_BLOCK]: newComps
+      }
+      return {
+        ...state,
+        pageName: C.PAGE_CHECKIN,
+        comps,
+        currActive: newComps[0]
+      }
+    },
     stopPassenger(state){
       return Evt.altPFn(state)
     },

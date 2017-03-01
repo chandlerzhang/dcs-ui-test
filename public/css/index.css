@@ -155,7 +155,7 @@ body {
 }
 
 .dcs-pl-table .ant-table-header {
-  margin-bottom: 0 !important;
+  /*margin-bottom: 0 !important;*/
 }
 
 .dcs-col-right {
@@ -199,5 +199,14 @@ body {
   font-weight: bold;
   text-align: center;
   padding-top: 20px;
+}
+
+.confirm-btns{
+  margin: 20px 10px 0 auto;
+  text-align: right;
+}
+
+.confirm-cancel-btn {
+  margin-right: 10px;
 }
 

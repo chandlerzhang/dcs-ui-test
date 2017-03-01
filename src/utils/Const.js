@@ -15,6 +15,7 @@ export const OPERATION_BLOCK = 'OPERATION_BLOCK'
 export const FLIGHTSWITCH_BLOCK = 'FLIGHTSWITCH_BLOCK'
 export const PSELECT_BLOCK = 'PSELECT_BLOCK'
 export const TOPMENU_BLOCK = 'TOPMENU_BLOCK'
+export const CONFIRM_BLOCK = 'CONFIRM_BLOCK'
 
 /**
  * 指令框Key
@@ -46,6 +47,8 @@ export const PAGE_CHECKIN = 'PAGE_CHECKIN'
  * @type {string}
  */
 export const SUBMIT_BTN_KEY = 'SUBMIT_BTN_KEY'
+export const CANCEL_BTN_KEY = 'CANCEL_BTN_KEY'
+export const OK_BTN_KEY = 'OK_BTN_KEY'
 
 /**
  * PAdd组件内固定Key

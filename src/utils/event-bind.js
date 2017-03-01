@@ -38,4 +38,7 @@ export default [{
   isMatch: (e)=>e.which == 13,
   stopEvent: false,
   funcName: 'enterFn'
+}, {
+  isMatch: (e)=>e.which == 79 && e.altKey,
+  funcName: 'altOFn'
 }]

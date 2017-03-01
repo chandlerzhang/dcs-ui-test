@@ -1,5 +1,5 @@
 // import $ from 'robe-ajax'
-import {Row, Col, Menu, Input, Breadcrumb, Carousel} from 'antd'
+import {Row, Col, Menu, Input, Breadcrumb, Carousel, Modal} from 'antd'
 const SubMenu = Menu.SubMenu;
 const MenuItemGroup = Menu.ItemGroup;
 import * as C from './Const'
@@ -288,6 +288,7 @@ export function getOperationBtns(state, dispatch) {
         enable: selectPls.some(pl=>!pl.wci),
         errmsg: '所选的旅客中必须包含未值机的旅客',
         onClick(){
+          dispatch({type: 'content/checkin'})
         }
       }, {
         text: '取消值机',
@@ -306,6 +307,7 @@ export function getOperationBtns(state, dispatch) {
         enable: selectPls.length == 1,
         errmsg: '请选择一个旅客',
         onClick(){
+          dispatch({type:'content/setEt'})
         }
       }, {
         text: '修改电话',
@@ -369,4 +371,16 @@ export function getOperationBtns(state, dispatch) {
   }
 
   return btns
+}
+
+export function confirm(tips, okFunc, cancelFunc) {
+
+  const emptyFunc = ()=> {
+  }
+  Modal.confirm({
+    title: '提示',
+    content: tips || '',
+    onOk: okFunc || emptyFunc,
+    onCancel: cancelFunc || emptyFunc
+  })
 }

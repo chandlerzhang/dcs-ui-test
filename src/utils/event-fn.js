@@ -3,6 +3,43 @@ import * as C from './Const'
 import {message} from 'antd'
 
 export default {
+  altOFn(state, event) {
+
+    const {selectPls, pageName, currBlock} = state
+
+    const canResponse = pageName === C.PAGE_PASSENGER_LIST
+    if (canResponse) {
+      if (selectPls.length != 1) {
+        message.error('请选择一个旅客')
+        return state
+      } else {
+        const isEt = selectPls[0].wet
+
+        const confirmTips = isEt ? '您确认要取消ET票吗？' : '您确认要设置ET票吗？'
+        // F.confirm(confirmTips, ()=> {
+        //   //todo
+        // })
+
+        const newComps = [C.OK_BTN_KEY, C.CANCEL_BTN_KEY]
+        const comps = {
+          ...state.comps,
+          [C.CONFIRM_BLOCK]: newComps
+        }
+        return {
+          ...state,
+          comps,
+          currBlock: C.CONFIRM_BLOCK,
+          currActive: newComps[0],
+          confirm: {
+            show: true,
+            content: confirmTips
+          }
+        }
+      }
+    }
+
+    return state
+  },
   enterFn(state, event) {
 
     const {currActive, currBlock, pageName, selectPls, comps} = state
@@ -250,14 +287,18 @@ export default {
     const newComps = state.pls.map(pl=>F.genPlKey(pl))
     const comps = {
       ...state.comps,
-      [C.MAIN_BLOCK]: newComps
+      [C.MAIN_BLOCK]: [...newComps, C.CMD_INPUT]
+    }
+    const confirm = {
+      ...state.confirm,
+      show: false
     }
     return {
       ...state,
       currBlock: C.MAIN_BLOCK,
       currActive: C.CMD_INPUT,
       pageName: C.PAGE_PASSENGER_LIST,
-      comps,
+      comps, confirm
     }
   },
   f1Fn(state, event) {

@@ -21,7 +21,7 @@ export default class Checkin extends React.Component {
     }
     const isCurrPage = pageName === C.PAGE_CHECKIN
 
-    return <div>
+    return <div style={{marginTop: '20px'}}>
       <Row>
         <Col span={24}>
 

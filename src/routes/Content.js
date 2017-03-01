@@ -1,6 +1,6 @@
 import React from 'react'
 import {connect} from 'dva'
-import {message} from 'antd'
+import {message, Modal} from 'antd'
 import PSelect from '../components/PSelect'
 import FStatus from '../components/FStatus'
 import Login from '../components/Login'
@@ -12,6 +12,7 @@ import Mphone from '../components/Mphone'
 import PStop from '../components/PStop'
 import SeatMap from '../components/SeatMap'
 import Checkin from '../components/Checkin'
+import Confirm from '../components/Confirm'
 import * as C from '../utils/Const'
 import * as F from '../utils/Func'
 
@@ -102,7 +103,7 @@ class Content extends React.Component {
 
   render() {
     const {content, dispatch} = this.props
-    const {pls, pageName, fls, selectPls, loading, token, currBlock, currActive, flightSwitchPageNum, flightSwitchCurrPage, passengerSelectPageNum, passengerSelectCurrPage, passengerOperationPageNum, passengerOperationCurrPage} = content
+    const {pls, pageName, confirm, fls, selectPls, loading, token, currBlock, currActive, flightSwitchPageNum, flightSwitchCurrPage, passengerSelectPageNum, passengerSelectCurrPage, passengerOperationPageNum, passengerOperationCurrPage} = content
     const isLogin = token && token.user
 
     const onPrev = (t)=> {
@@ -155,6 +156,10 @@ class Content extends React.Component {
       currBlock, currActive,
     }
 
+    const confirmProps = {
+      confirm, currBlock, currActive,
+    }
+
     if (isLogin) {
 
       return <div className="dcs-main">
@@ -174,6 +179,7 @@ class Content extends React.Component {
           <Footer/>
         </div>
 
+        <Confirm {...confirmProps}/>
       </div>
     } else {
       const loginProps = {

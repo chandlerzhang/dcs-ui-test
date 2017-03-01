@@ -4,7 +4,7 @@ export default class SeatMap extends React.Component {
 
   render() {
 
-    return <div id="seatStatus" className="table-responsive" style={{overflow: 'hidden'}}>
+    return <div id="seatStatus" className="table-responsive" style={{overflow: 'hidden',marginTop:'20px'}}>
       <thread>
       </thread>
       <table className="table table-bordered table-hover table-striped table-condensed">
