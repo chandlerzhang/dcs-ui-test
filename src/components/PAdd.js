@@ -2,12 +2,10 @@ import React from 'react'
 import * as F from '../utils/Func'
 import * as C from '../utils/Const'
 import {
-  Form, Select, InputNumber, Switch, Radio,
-  Slider, Button, Upload, Icon, Input, Row, Col
+  Form, Radio,
+  Button, Input, Row, Col
 } from 'antd';
 const FormItem = Form.Item;
-const Option = Select.Option;
-const RadioButton = Radio.Button;
 const RadioGroup = Radio.Group;
 
 export default class PAdd extends React.Component {

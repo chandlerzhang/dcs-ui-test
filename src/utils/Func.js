@@ -274,7 +274,7 @@ export function getPageInfoField(type) {
   return pageInfo
 }
 
-export function getOperationBtns(state,dispatch) {
+export function getOperationBtns(state, dispatch) {
 
   let btns = []
 
@@ -286,79 +286,81 @@ export function getOperationBtns(state,dispatch) {
       btns = [{
         text: '值机',
         enable: selectPls.some(pl=>!pl.wci),
-        errmsg:'所选的旅客中必须包含未值机的旅客',
+        errmsg: '所选的旅客中必须包含未值机的旅客',
         onClick(){
         }
       }, {
         text: '取消值机',
         enable: selectPls.some(pl=>pl.wci),
-        errmsg:'所选的旅客中必须包含已值机的旅客',
+        errmsg: '所选的旅客中必须包含已值机的旅客',
         onClick(){
         }
       }, {
         text: '候补',
         enable: true,
         onClick(){
-          dispatch({type:'content/addPassenger'})
+          dispatch({type: 'content/addPassenger'})
         }
       }, {
         text: '电子客票',
         enable: selectPls.length == 1,
-        errmsg:'请选择一个旅客',
+        errmsg: '请选择一个旅客',
         onClick(){
         }
       }, {
         text: '修改电话',
         enable: selectPls.length == 1,
-        errmsg:'请选择一个旅客',
+        errmsg: '请选择一个旅客',
         onClick(){
+          dispatch({type: 'content/modifyPhone'})
         }
       }, {
         text: '修改服务',
         enable: selectPls.length == 1,
-        errmsg:'请选择一个旅客',
+        errmsg: '请选择一个旅客',
         onClick(){
         }
       }, {
         text: '截留',
-        enable: selectPls.length == 1,
-        errmsg:'请选择一个旅客',
+        enable: selectPls.length > 0,
+        errmsg: '请选择一个或多个旅客',
         onClick(){
+          dispatch({type: 'content/stopPassenger'})
         }
       }, {
         text: '设置成人/儿童',
         enable: selectPls.length == 1 && selectPls[0].sex !== 'INF',
-        errmsg:'请选择一个非婴儿旅客',
+        errmsg: '请选择一个非婴儿旅客',
         onClick(){
         }
       }, {
         text: '绑定婴儿',
         enable: selectPls.length == 1 && selectPls[0].sex === 'ADULT',
-        errmsg:'请选择一个成人旅客',
+        errmsg: '请选择一个成人旅客',
         onClick(){
         }
       }, {
         text: '重打登机牌',
         enable: selectPls.some(pl=>pl.wci),
-        errmsg:'所选的旅客中必须包含已值机的旅客',
+        errmsg: '所选的旅客中必须包含已值机的旅客',
         onClick(){
         }
       }, {
         text: '重打行李牌',
         enable: selectPls.some(pl=>pl.wci),
-        errmsg:'所选的旅客中必须包含已值机的旅客',
+        errmsg: '所选的旅客中必须包含已值机的旅客',
         onClick(){
         }
       }, {
         text: '手工保护',
         enable: selectPls.length > 0,
-        errmsg:'请选择一个或多个旅客',
+        errmsg: '请选择一个或多个旅客',
         onClick(){
         }
       }, {
         text: '编辑API',
         enable: selectPls.length == 1,
-        errmsg:'请选择一个旅客',
+        errmsg: '请选择一个旅客',
         onClick(){
         }
       }]

@@ -3,6 +3,46 @@ import * as C from './Const'
 import {message} from 'antd'
 
 export default {
+  altPFn(state, event) {
+
+    const {selectPls} = state
+    if (selectPls.length == 0) {
+      message.error('请选择一个或多个旅客');
+      return state
+    }
+    const newComps = [C.PSTOP_NOTE_KEY, C.SUBMIT_BTN_KEY, C.CMD_INPUT]
+    const comps = {
+      ...state.comps,
+      [C.MAIN_BLOCK]: newComps
+    }
+    return {
+      ...state,
+      pageName: C.PAGE_STOP_PASSENGER,
+      comps,
+      currActive: newComps[0],
+      currBlock: C.MAIN_BLOCK,
+    }
+  },
+  altCommaFn(state, event) {
+
+    const {selectPls} = state
+    if (selectPls.length != 1) {
+      message.error('请选择一个旅客');
+      return state
+    }
+    const newComps = [C.MPHONE_TE_KEY, C.SUBMIT_BTN_KEY, C.CMD_INPUT]
+    const comps = {
+      ...state.comps,
+      [C.MAIN_BLOCK]: newComps
+    }
+    return {
+      ...state,
+      pageName: C.PAGE_MODIFY_PHONE,
+      comps,
+      currActive: newComps[0],
+      currBlock: C.MAIN_BLOCK,
+    }
+  },
   ctrlBFn(state, event) {
 
     const newComps = [C.PADD_CN_KEY, C.PADD_SEX1_KEY, C.PADD_SEX2_KEY, C.PADD_SEX3_KEY, C.PADD_DN_KEY, C.PADD_ETI_KEY, C.SUBMIT_BTN_KEY, C.CMD_INPUT]
@@ -203,7 +243,10 @@ export default {
     }
   },
   ctrlAFn(state, event) {
-    const {pls, selectPls} = state
+    const {pls, selectPls, pageName} = state
+    if (pageName != C.PAGE_PASSENGER_LIST) {
+      return state
+    }
     return {
       selectPls: pls.length == selectPls.length ? [] : pls
     }

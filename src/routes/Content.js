@@ -8,6 +8,8 @@ import Header from '../components/Header'
 import Footer from '../components/Footer'
 import PList from '../components/PList'
 import PAdd from '../components/PAdd'
+import Mphone from '../components/Mphone'
+import PStop from '../components/PStop'
 import * as C from '../utils/Const'
 import * as F from '../utils/Func'
 
@@ -20,7 +22,7 @@ class Content extends React.Component {
   renderMain() {
 
     const {content, dispatch} = this.props
-    const {pageName, token, currActive,currBlock} = content
+    const {pageName, token, currActive, currBlock, selectPls} = content
     switch (pageName) {
 
       case C.PAGE_PASSENGER_LIST:
@@ -54,16 +56,39 @@ class Content extends React.Component {
 
         const pAddProps = {
           dss: [token.fl.ars],
-          currActive,currBlock
+          currActive, currBlock
         }
         return <PAdd {...pAddProps} />
+
+      case C.PAGE_MODIFY_PHONE:
+
+        if (selectPls.length == 0) {
+          message.error('请选择一个旅客')
+          return null
+        }
+        const mPhoneProps = {
+          selectPls, currActive, currBlock, pageName,
+          phone: selectPls[0].te
+        }
+        return <Mphone {...mPhoneProps}/>
+
+      case C.PAGE_STOP_PASSENGER:
+
+        if (selectPls.length == 0) {
+          message.error('请选择一个或多个旅客')
+          return null
+        }
+        const stopPlProps = {
+          selectPls, currActive, currBlock, pageName
+        }
+        return <PStop {...stopPlProps}/>
 
     }
   }
 
   render() {
     const {content, dispatch} = this.props
-    const {pls, fls, selectPls, loading, token, currBlock, currActive, flightSwitchPageNum, flightSwitchCurrPage, passengerSelectPageNum, passengerSelectCurrPage, passengerOperationPageNum, passengerOperationCurrPage} = content
+    const {pls, pageName, fls, selectPls, loading, token, currBlock, currActive, flightSwitchPageNum, flightSwitchCurrPage, passengerSelectPageNum, passengerSelectCurrPage, passengerOperationPageNum, passengerOperationCurrPage} = content
     const isLogin = token && token.user
 
     const onPrev = (t)=> {
@@ -126,7 +151,8 @@ class Content extends React.Component {
         <div className="dcs-center">
           {fls && fls.length > 0 ? <PSelect {...fSwitchProps}/> : null}
           <FStatus fl={token.fl}/>
-          {selectPls && selectPls.length > 0 ? <PSelect {...passengerSelectProps} /> : null}
+          {selectPls && selectPls.length > 0 ?
+            <PSelect {...passengerSelectProps} /> : null}
           {operationBtns && operationBtns.length > 0 ? <PSelect {...passengerOprProps} /> : null}
           {this.renderMain()}
         </div>

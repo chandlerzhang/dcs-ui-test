@@ -25,4 +25,10 @@ export default [{
 },{
   isMatch: (e)=>e.which == 66 && e.ctrlKey,
   funcName: 'ctrlBFn'
+},{
+  isMatch: (e)=>e.which == 188 && e.altKey,
+  funcName: 'altCommaFn'
+},{
+  isMatch: (e)=>e.which == 80 && e.altKey,
+  funcName: 'altPFn'
 }]

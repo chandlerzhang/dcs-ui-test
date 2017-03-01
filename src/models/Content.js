@@ -70,8 +70,13 @@ export default {
   },
 
   reducers: {
+    stopPassenger(state){
+      return Evt.altPFn(state)
+    },
+    modifyPhone(state){
+      return Evt.altCommaFn(state)
+    },
     addPassenger(state){
-
       return Evt.ctrlBFn(state)
     },
     eventHandler(state, {handler}){
@@ -238,9 +243,11 @@ export default {
     unselect(state, {record}){
 
       const {selectPls} = state
+
+      const leftPls = selectPls.filter(pl=>pl.uui != record.uui)
       return {
         ...state,
-        selectPls: selectPls.filter(pl=>pl.uui != record.uui)
+        selectPls: leftPls
       }
     },
     selectAll(state) {
