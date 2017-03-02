@@ -339,7 +339,7 @@ export default {
   },
   downFn(state, event) {
 
-    const {currActive, currBlock} = state
+    const {currActive, currBlock, pageName, plPageNum} = state
 
     const comps = state.comps[currBlock] || []
     if (comps.length == 0) {
@@ -357,6 +357,15 @@ export default {
         index = 0
       }
 
+      if (currBlock === C.MAIN_BLOCK && pageName === C.PAGE_PASSENGER_LIST && comps[index] !== C.CMD_INPUT) {
+        const currPage = F.calculateCurrPage(index, plPageNum)
+        return {
+          ...state,
+          currActive: comps[index],
+          plCurrPage: currPage
+        }
+      }
+
       return {
         ...state,
         currActive: comps[index]
@@ -364,7 +373,7 @@ export default {
     }
   },
   upFn(state, event) {
-    const {currActive, currBlock} = state
+    const {currActive, currBlock, pageName, plPageNum} = state
 
     const comps = state.comps[currBlock] || []
     if (comps.length == 0) {
@@ -380,6 +389,14 @@ export default {
     } else {
       if (--index < 0) {
         index = comps.length - 1
+      }
+      if (currBlock === C.MAIN_BLOCK && pageName === C.PAGE_PASSENGER_LIST && comps[index] !== C.CMD_INPUT) {
+        const currPage = F.calculateCurrPage(index, plPageNum)
+        return {
+          ...state,
+          currActive: comps[index],
+          plCurrPage: currPage
+        }
       }
 
       return {

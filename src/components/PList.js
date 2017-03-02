@@ -49,7 +49,11 @@ export default class PList extends React.Component {
       },
     }
 
-    const pagination = <Pagination defaultCurrent={plCurrPage} defaultPageSize={plPageNum}/>
+    //const pagination = <Pagination defaultCurrent={plCurrPage} pageSize={plPageNum} total={pls.length}/>
+    const pagination = {
+      current: plCurrPage,
+      pageSize: plPageNum
+    }
 
     return <Table className="dcs-pl-table"
                   title={(o)=> <span><span className="dcs-circle">i</span>共<span

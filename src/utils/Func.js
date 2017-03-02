@@ -307,7 +307,7 @@ export function getOperationBtns(state, dispatch) {
         enable: selectPls.length == 1,
         errmsg: '请选择一个旅客',
         onClick(){
-          dispatch({type:'content/showSetEt'})
+          dispatch({type: 'content/showSetEt'})
         }
       }, {
         text: '修改电话',
@@ -383,4 +383,9 @@ export function confirm(tips, okFunc, cancelFunc) {
     onOk: okFunc || emptyFunc,
     onCancel: cancelFunc || emptyFunc
   })
+}
+
+export function calculateCurrPage(index, pagenum) {
+
+  return index % pagenum == 0 ? index / pagenum : Math.floor(index / pagenum) + 1
 }
