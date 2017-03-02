@@ -3,6 +3,29 @@ import * as C from './Const'
 import {message} from 'antd'
 
 export default {
+  ctrl5Fn(state, event) {
+
+    const {selectPls} = state
+
+    if (selectPls.length == 0) {
+      message.error('请选择一个或多个旅客')
+      return state
+    }
+
+    const newComps = [C.MPROTECT_FN_KEY, C.MPROTECT_FD_KEY, C.SUBMIT_BTN_KEY, C.CMD_INPUT]
+    const comps = {
+      ...state.comps,
+      [C.MAIN_BLOCK]: newComps
+    }
+
+    return {
+      ...state,
+      currBlock: C.MAIN_BLOCK,
+      currActive: newComps[0],
+      comps,
+      pageName: C.PAGE_MANUAL_PROTECT
+    }
+  },
   altOFn(state, event) {
 
     const {selectPls, pageName, currBlock} = state

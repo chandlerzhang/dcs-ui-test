@@ -13,6 +13,7 @@ import PStop from '../components/PStop'
 import SeatMap from '../components/SeatMap'
 import Checkin from '../components/Checkin'
 import Confirm from '../components/Confirm'
+import ManualProtect from '../components/ManualProtect'
 import * as C from '../utils/Const'
 import * as F from '../utils/Func'
 
@@ -98,6 +99,12 @@ class Content extends React.Component {
         }
         return <Checkin {...checkinProps}/>
 
+      case C.PAGE_MANUAL_PROTECT:
+
+        const mproectProps = {
+          selectPls, currActive, currBlock, pageName
+        }
+        return <ManualProtect {...mproectProps}/>
     }
   }
 

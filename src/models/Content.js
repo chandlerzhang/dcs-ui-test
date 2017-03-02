@@ -97,6 +97,10 @@ export default {
   },
 
   reducers: {
+    manualProtect(state){
+
+      return Evt.ctrl5Fn(state)
+    },
     closeConfirm(state){
 
       return Evt.escFn(state)

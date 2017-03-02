@@ -358,6 +358,7 @@ export function getOperationBtns(state, dispatch) {
         enable: selectPls.length > 0,
         errmsg: '请选择一个或多个旅客',
         onClick(){
+          dispatch({type:'content/manualProtect'})
         }
       }, {
         text: '编辑API',
