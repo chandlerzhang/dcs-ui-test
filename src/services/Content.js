@@ -13,3 +13,17 @@ export async function queryUser(params) {
     method: 'get'
   })
 }
+
+export async function setEt(params) {
+
+  console.log('params', params)
+  const data = {
+    isEt: params.isEt,
+    plu: params.pl.uui
+  }
+
+  return F.request('./data/setEt.json', {
+    method: 'get',
+    data: data
+  })
+}

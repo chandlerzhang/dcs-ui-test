@@ -17,6 +17,9 @@ export default {
     pageName: C.PAGE_PASSENGER_LIST,//current page name
     comps: {},
 
+    plPageNum: 10,
+    plCurrPage: 1,
+
     flightSwitchPageNum: 8,
     flightSwitchCurrPage: 1,
 
@@ -28,7 +31,7 @@ export default {
 
     confirm: {
       show: false,
-      content:''
+      content: ''
     }
   },
 
@@ -45,17 +48,24 @@ export default {
       } else {
         window.addEventListener('keydown', (e)=> {
           let fn;
+          let eventFn;
           for (const eb of EvtBind) {
             if (eb.isMatch(e)) {
               if (eb.stopEvent !== false) {//除非指定stopEvent：false，否则都停止默认事件及事件传播
                 F.stopEvent(e)
               }
+
+              // if (eb.async) {
+              //   eventFn = 'asyncEventHandler'
+              // } else {
+              eventFn = 'eventHandler'
+              // }
               fn = eb.funcName
               break
             }
           }
           if (fn) {
-            dispatch({type: 'eventHandler', handler: {fn: fn, event: e}})
+            dispatch({type: eventFn, handler: {fn: fn, event: e}})
           }
         })
       }
@@ -63,6 +73,18 @@ export default {
   },
 
   effects: {
+
+    *doSetEt({isEt, pl}, {call, put}){
+
+      const setResult = yield call(S.setEt, {isEt, pl})
+
+      console.log('setResult', setResult)
+      if (setResult.success) {
+
+        yield put({type: 'executeSetEt', isEt, pl})
+        yield put({type: 'closeConfirm'})
+      }
+    },
     *queryUser({payload}, {call, put}){
       yield put({type: 'showLoading'})
       const data = F.upperCase(yield call(S.queryUser, null))
@@ -75,7 +97,38 @@ export default {
   },
 
   reducers: {
-    setEt(state){
+    closeConfirm(state){
+
+      return Evt.escFn(state)
+    },
+    executeSetEt(state, {isEt, pl}){
+
+      const {pls, selectPls} = state
+
+      const newSelectPls = selectPls.map(p=> {
+
+        if (p.uui === pl.uui) {
+
+          p.wet = !isEt
+        }
+        return p
+      })
+
+      const newPls = pls.map(p=> {
+
+        if (p.uui === pl.uui) {
+          p.wet = !isEt
+        }
+        return p
+      })
+
+      return {
+        ...state,
+        pls: newPls,
+        selectPls: newSelectPls
+      }
+    },
+    showSetEt(state){
 
       return Evt.altOFn(state)
     },
@@ -260,7 +313,8 @@ export default {
       selectPls.push(record)
       return {
         ...state,
-        selectPls
+        selectPls,
+        passengerSelectCurrPage: 1
       }
     },
     unselect(state, {record}){
@@ -277,7 +331,8 @@ export default {
 
       return {
         ...state,
-        selectPls: state.pls
+        selectPls: state.pls,
+        passengerSelectCurrPage: 1
       }
     },
     unselectAll(state) {

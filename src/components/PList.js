@@ -1,5 +1,5 @@
 import React from 'react'
-import {Table} from 'antd'
+import {Table, Pagination} from 'antd'
 import PDetail from '../components/PDetail'
 import * as F from '../utils/Func'
 
@@ -7,7 +7,7 @@ export default class PList extends React.Component {
 
   render() {
 
-    const {pls, selectPls, currActive, onRowSelect, onRowSelectAll, onRowClick} = this.props
+    const {pls, selectPls, currActive, onRowSelect, onRowSelectAll, onRowClick, plCurrPage, plPageNum} = this.props
 
     const columns = [
       {
@@ -49,6 +49,8 @@ export default class PList extends React.Component {
       },
     }
 
+    const pagination = <Pagination defaultCurrent={plCurrPage} defaultPageSize={plPageNum}/>
+
     return <Table className="dcs-pl-table"
                   title={(o)=> <span><span className="dcs-circle">i</span>共<span
                     className="dcs-pl-table-num">{pls.length}</span>条旅客数据，已选择<span
@@ -56,7 +58,7 @@ export default class PList extends React.Component {
                   rowKey={pl=>F.genPlKey(pl)}
                   rowSelection={rowSelection}
                   columns={columns}
-                  pagination={false}
+
                   dataSource={pls}
                   onRowClick={(record)=> {
 
@@ -66,6 +68,7 @@ export default class PList extends React.Component {
                     }
                   }}
                   expandedRowKeys={[currActive || '']}
+                  pagination={pagination}
                   expandedRowRender={r=> {
                     const pDetailProps = {
                       pl: r
@@ -75,6 +78,6 @@ export default class PList extends React.Component {
                   rowClassName={(r)=> {
                     return F.getActiveCls(currActive == F.genPlKey(r))
                   }}
-                  scroll={{y: 400}}/>
+                  scroll={{y: 350}}/>
   }
 }

@@ -40,5 +40,6 @@ export default [{
   funcName: 'enterFn'
 }, {
   isMatch: (e)=>e.which == 79 && e.altKey,
+  async: true,
   funcName: 'altOFn'
 }]

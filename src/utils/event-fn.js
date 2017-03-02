@@ -16,9 +16,6 @@ export default {
         const isEt = selectPls[0].wet
 
         const confirmTips = isEt ? '您确认要取消ET票吗？' : '您确认要设置ET票吗？'
-        // F.confirm(confirmTips, ()=> {
-        //   //todo
-        // })
 
         const newComps = [C.OK_BTN_KEY, C.CANCEL_BTN_KEY]
         const comps = {
@@ -32,7 +29,13 @@ export default {
           currActive: newComps[0],
           confirm: {
             show: true,
-            content: confirmTips
+            content: confirmTips,
+            onOk(dispatch){
+              dispatch({type: 'content/doSetEt', isEt: isEt, pl: selectPls[0]})
+            },
+            onCancel(dispatch){
+              dispatch({type: 'content/closeConfirm'})
+            }
           }
         }
       }

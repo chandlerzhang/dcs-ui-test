@@ -158,6 +158,16 @@ class Content extends React.Component {
 
     const confirmProps = {
       confirm, currBlock, currActive,
+      onOk(){
+        if (typeof confirm.onOk === 'function') {
+          confirm.onOk(dispatch)
+        }
+      },
+      onCancel(){
+        if (typeof confirm.onCancel === 'function') {
+          confirm.onCancel(dispatch)
+        }
+      }
     }
 
     if (isLogin) {
@@ -202,12 +212,15 @@ Content.PropTypes = {
   currActive: React.PropTypes.string,
   pageName: React.PropTypes.string,
   comps: React.PropTypes.object,
+  plPageNum: React.PropTypes.number,
+  plCurrPage: React.PropTypes.number,
   flightSwitchPageNum: React.PropTypes.number,
   flightSwitchCurrPage: React.PropTypes.number,
   passengerSelectPageNum: React.PropTypes.number,
   passengerSelectCurrPage: React.PropTypes.number,
   passengerOperationPageNum: React.PropTypes.number,
   passengerOperationCurrPage: React.PropTypes.number,
+  confirm: React.PropTypes.object,
 }
 
 export default connect(({content})=> {

@@ -8,15 +8,13 @@ export default class Confirm extends React.Component {
 
   render() {
 
-    const {confirm, currBlock, currActive} = this.props
+    const {confirm, currBlock, currActive,onOk,onCancel} = this.props
 
     const isCurrPage = currBlock == C.CONFIRM_BLOCK
 
     return <Modal title="提示" visible={confirm.show}
-                  onOk={()=> {
-                  }}
-                  onCancel={()=> {
-                  }}
+                  onOk={onOk}
+                  onCancel={onCancel}
                   afterClose={()=> {
                     F.focusActive()
                   }}
@@ -26,9 +24,9 @@ export default class Confirm extends React.Component {
         {confirm.content}
       </div>
       <div className="confirm-btns">
-        <Button className={F.getActiveCls(isCurrPage && currActive == C.CANCEL_BTN_KEY, 'confirm-cancel-btn')} type=""
+        <Button onClick={onCancel} className={F.getActiveCls(isCurrPage && currActive == C.CANCEL_BTN_KEY, 'confirm-cancel-btn')} type=""
                 htmlType="submit">取消</Button>
-        <Button className={F.getActiveCls(isCurrPage && currActive == C.OK_BTN_KEY, 'confirm-ok-btn')} type="primary"
+        <Button onClick={onOk} className={F.getActiveCls(isCurrPage && currActive == C.OK_BTN_KEY, 'confirm-ok-btn')} type="primary"
                 htmlType="submit">确定</Button>
       </div>
     </Modal>

@@ -307,7 +307,7 @@ export function getOperationBtns(state, dispatch) {
         enable: selectPls.length == 1,
         errmsg: '请选择一个旅客',
         onClick(){
-          dispatch({type:'content/setEt'})
+          dispatch({type:'content/showSetEt'})
         }
       }, {
         text: '修改电话',
