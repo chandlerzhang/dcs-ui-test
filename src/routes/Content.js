@@ -14,6 +14,7 @@ import SeatMap from '../components/SeatMap'
 import Checkin from '../components/Checkin'
 import Confirm from '../components/Confirm'
 import ManualProtect from '../components/ManualProtect'
+import BindingInf from '../components/BindingInf'
 import * as C from '../utils/Const'
 import * as F from '../utils/Func'
 
@@ -26,7 +27,7 @@ class Content extends React.Component {
   renderMain() {
 
     const {content, dispatch} = this.props
-    const {pageName, token, currActive, currBlock, selectPls} = content
+    const {pls, pageName, token, currActive, currBlock, selectPls} = content
     switch (pageName) {
 
       case C.PAGE_PASSENGER_LIST:
@@ -105,6 +106,20 @@ class Content extends React.Component {
           selectPls, currActive, currBlock, pageName
         }
         return <ManualProtect {...mproectProps}/>
+
+      case C.PAGE_BINDING_INF:
+
+        const bindingInfProps = {
+          pls, selectPls, currActive, currBlock, pageName,
+          onBind(ps, cb){
+            dispatch({type: 'content/doBindingInf', ps, cb, bind: true})
+          },
+          unBind(ps, cb){
+            dispatch({type: 'content/doBindingInf', ps, cb, bind: false})
+          }
+        }
+
+        return <BindingInf {...bindingInfProps}/>
     }
   }
 
@@ -227,6 +242,8 @@ Content.PropTypes = {
   passengerSelectCurrPage: React.PropTypes.number,
   passengerOperationPageNum: React.PropTypes.number,
   passengerOperationCurrPage: React.PropTypes.number,
+  // selectableInfs: React.PropTypes.array,
+  // selectedInfs: React.PropTypes.array,
   confirm: React.PropTypes.object,
 }
 

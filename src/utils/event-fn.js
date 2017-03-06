@@ -1,8 +1,20 @@
 import * as F from './Func'
 import * as C from './Const'
+import * as S from '../services/Content'
 import {message} from 'antd'
 
 export default {
+  *alt7Fn(state, {call, put, select}, event) {
+
+    let {pls, selectPls} = state
+    if (selectPls.length == 0 || selectPls[0].sex !== 'M') {
+      message.error('请选择一个成人旅客');
+      return
+    }
+    const infs = F.upperCase(yield call(S.queryInfs, {uui: selectPls[0].uui}))
+
+    yield put({type: 'showBindingInf', infs: infs || []})
+  },
   ctrl5Fn(state, event) {
 
     const {selectPls} = state

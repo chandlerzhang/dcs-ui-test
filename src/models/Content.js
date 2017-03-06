@@ -29,6 +29,9 @@ export default {
     passengerOperationPageNum: 8,
     passengerOperationCurrPage: 1,
 
+    // selectableInfs: [],//可选婴儿
+    // selectedInfs: [],//已选婴儿
+
     confirm: {
       show: false,
       content: ''
@@ -55,11 +58,11 @@ export default {
                 F.stopEvent(e)
               }
 
-              // if (eb.async) {
-              //   eventFn = 'asyncEventHandler'
-              // } else {
-              eventFn = 'eventHandler'
-              // }
+              if (eb.async) {
+                eventFn = 'asyncEventHandler'
+              } else {
+                eventFn = 'eventHandler'
+              }
               fn = eb.funcName
               break
             }
@@ -74,6 +77,30 @@ export default {
 
   effects: {
 
+    *doBindingInf({ps, cb, bind}, {call, put, select}){
+
+      let r;
+      if (bind) {
+        r = yield call(S.bindInf, {ps})
+      } else {
+        r = yield call(S.unBindInf, {ps})
+      }
+      if (typeof cb === 'function') {
+        cb(r, ps, bind)
+      }
+      yield put({type: 'updateBindingInf', result: r, ps, bind})
+    },
+    *asyncEventHandler({handler}, {call, put, select}){
+
+      const {fn, event} = handler
+      const f = Evt[fn]
+
+      if (typeof f === 'function') {
+        yield f(yield select(s=>s.content), {call, put, select}, event)
+      } else {
+        console.error(`event func[${fn}] not found!`)
+      }
+    },
     *doSetEt({isEt, pl}, {call, put}){
 
       const setResult = yield call(S.setEt, {isEt, pl})
@@ -85,18 +112,74 @@ export default {
         yield put({type: 'closeConfirm'})
       }
     },
-    *queryUser({payload}, {call, put}){
+    *queryUser({payload}, {call, put, select}){
       yield put({type: 'showLoading'})
       const data = F.upperCase(yield call(S.queryUser, null))
-      // console.log('*queryUser', data)
+      console.log('*queryUser', data, arguments, yield select(s=>s))
+
       if (data) {
         const pls = F.upperCase(yield call(S.fetch, null))
         yield put({type: 'initContext', token: data, pls: pls})
       }
-    }
+    },
   },
 
   reducers: {
+    updateBindingInf(state, {result, ps, bind}){
+
+      //todo 成人可以绑定多个婴儿，目前判断婴儿是否可绑定逻辑无法确认，暂时不做
+      if (result) {
+        if (bind) {
+
+        }
+      }
+
+      return state
+    },
+    showBindingInf(state, {infs}){
+      let {pls, selectPls} = state
+
+      const filterFn = pl=> {
+        const isMatch = pl.uui == selectPls[0].uui
+        if (isMatch) {
+          pl.infs = infs.list
+        }
+        return pl
+      }
+
+      pls = pls.map(filterFn)
+      selectPls = selectPls.map(filterFn)
+
+      const selectableInfs = F.getSelectableInfs(pls)
+      const selectedInfs = selectPls[0].infs || []
+      let newComps = [
+        ...selectableInfs.map(pl=>F.genBindingInfPlKey(pl)),
+      ]
+      if (selectableInfs.length > 0) {
+        newComps.push(C.BINGDINGINF_BINDING_KEY)
+      }
+      if (selectedInfs.length > 0) {
+        newComps.push(C.BINGDINGINF_UNBINDING_KEY)
+      }
+      newComps = [...newComps,
+        ...selectedInfs.map(pl=>F.genBindingInfPlKey(pl)),
+      ]
+
+      const comps = {
+        ...state.comps,
+        [C.MAIN_BLOCK]: newComps
+      }
+
+      return {
+        ...state,
+        pageName: C.PAGE_BINDING_INF,
+        currBlock: C.MAIN_BLOCK,
+        pls,
+        selectPls,
+        comps,
+        currActive: newComps[0]
+      }
+    },
     manualProtect(state){
 
       return Evt.ctrl5Fn(state)

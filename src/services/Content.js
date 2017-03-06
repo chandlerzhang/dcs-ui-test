@@ -27,3 +27,22 @@ export async function setEt(params) {
     data: data
   })
 }
+
+export async function queryInfs(params) {
+  return F.request('./data/queryInf.json', {
+    method: 'get'
+  })
+}
+
+export async function bindInf(p) {
+
+  return F.request('./data/bindInf.json', {
+    method: 'get'
+  })
+}
+
+export async function unBindInf(p) {
+  return F.request('./data/unBindInf.json', {
+    method: 'get'
+  })
+}

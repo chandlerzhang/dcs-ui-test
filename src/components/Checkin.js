@@ -6,6 +6,9 @@ import SeatMap from '../components/SeatMap'
 
 const FormItem = Form.Item;
 
+/**
+ * 值机
+ */
 export default class Checkin extends React.Component {
 
   render() {

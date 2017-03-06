@@ -71,7 +71,7 @@ body {
 
   margin: 5px auto;
   padding: 5px;
-  background-color: #96dbfa;
+  background-color: rgb(220,241,252);
 }
 
 .dcs-pselect-title {
@@ -202,12 +202,39 @@ body {
   padding-bottom: 20px;
 }
 
-.confirm-btns{
+.confirm-btns {
   margin: 20px 10px 0 auto;
   text-align: right;
 }
 
 .confirm-cancel-btn {
   margin-right: 10px;
+}
+
+.binding-inf-body {
+  width: 80%;
+  /*text-align: center;*/
+  margin: 10px auto;
+}
+.binding-btn{
+  margin-top: 100px !important;
+}
+.binding-btn, .unbinding-btn {
+  margin: 50px auto;
+  text-align: center;
+}
+
+.binding-inf-div-title{
+  font-size: 1.3em;
+  font-weight: bold;
+}
+.binding-inf-submit-div{
+
+  margin-top: 20px;
+  text-align: center;
+}
+
+.ant-table-title{
+  background-color: rgb(220,241,252);
 }
 

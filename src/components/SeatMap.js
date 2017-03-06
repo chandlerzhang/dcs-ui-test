@@ -1,5 +1,8 @@
 import React from 'react'
 
+/**
+ * 座位图
+ */
 export default class SeatMap extends React.Component {
 
   render() {

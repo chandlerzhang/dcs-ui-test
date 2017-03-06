@@ -3,6 +3,9 @@ import {Table, Pagination} from 'antd'
 import PDetail from '../components/PDetail'
 import * as F from '../utils/Func'
 
+/**
+ * 旅客列表
+ */
 export default class PList extends React.Component {
 
   render() {

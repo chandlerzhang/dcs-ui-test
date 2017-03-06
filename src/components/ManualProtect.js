@@ -7,6 +7,9 @@ import {
 } from 'antd';
 const FormItem = Form.Item;
 
+/**
+ * 手工保护
+ */
 export default class ManualProtect extends React.Component{
 
   render(){

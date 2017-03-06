@@ -8,6 +8,9 @@ import {
 const FormItem = Form.Item;
 const RadioGroup = Radio.Group;
 
+/**
+ * 候补旅客
+ */
 export default class PAdd extends React.Component {
 
   handleSubmit() {

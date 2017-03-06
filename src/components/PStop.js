@@ -7,6 +7,9 @@ import {
 } from 'antd';
 const FormItem = Form.Item;
 
+/**
+ * 旅客截留
+ */
 export default class PStop extends React.Component {
 
   render() {

@@ -40,9 +40,12 @@ export default [{
   funcName: 'enterFn'
 }, {
   isMatch: (e)=>e.which == 79 && e.altKey,
-  async: true,
   funcName: 'altOFn'
 }, {
   isMatch: (e)=>e.which == 53 && e.ctrlKey,
   funcName: 'ctrl5Fn'
+}, {
+  isMatch: (e)=>e.which == 55 && e.altKey,
+  async: true,
+  funcName: 'alt7Fn'
 }]

@@ -337,9 +337,10 @@ export function getOperationBtns(state, dispatch) {
         }
       }, {
         text: '绑定婴儿',
-        enable: selectPls.length == 1 && selectPls[0].sex === 'ADULT',
+        enable: selectPls.length == 1 && selectPls[0].sex === 'M',
         errmsg: '请选择一个成人旅客',
         onClick(){
+          dispatch({type: 'content/asyncEventHandler', handler: {fn: 'alt7Fn'}})
         }
       }, {
         text: '重打登机牌',
@@ -459,4 +460,20 @@ export function activeMoveTo(offset, state) {
       currActive: comps[index]
     }
   }
+}
+
+/**
+ * 获取可被绑定的婴儿
+ * @param selectPls
+ */
+export function getSelectableInfs(selectPls) {
+
+  const allInfs = selectPls.filter(pl=>pl.sex === 'I')
+  const bindedInfs = selectPls.filter(pl=>$.trim(pl.riu) != '').map(pl=>pl.riu)
+
+  return allInfs.filter(pl=>!bindedInfs.some(k=>k === pl.uui))
+}
+
+export function genBindingInfPlKey(pl) {
+  return `binding-inf-${pl.uui}`
 }
