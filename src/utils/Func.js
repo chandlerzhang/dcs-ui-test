@@ -358,7 +358,7 @@ export function getOperationBtns(state, dispatch) {
         enable: selectPls.length > 0,
         errmsg: '请选择一个或多个旅客',
         onClick(){
-          dispatch({type:'content/manualProtect'})
+          dispatch({type: 'content/manualProtect'})
         }
       }, {
         text: '编辑API',
@@ -386,7 +386,77 @@ export function confirm(tips, okFunc, cancelFunc) {
   })
 }
 
+/**
+ * 计算当前页
+ * @param index
+ * @param pagenum
+ * @returns {number}
+ */
 export function calculateCurrPage(index, pagenum) {
 
+  index++
   return index % pagenum == 0 ? index / pagenum : Math.floor(index / pagenum) + 1
+}
+
+/**
+ * 是否是分页表格
+ * @param currBlock
+ * @param pageName
+ * @returns {boolean}
+ */
+export function isPaginationTable(currBlock, pageName) {
+  return currBlock === C.MAIN_BLOCK && pageName === C.PAGE_PASSENGER_LIST
+}
+
+/**
+ * 焦点移动
+ * @param offset 偏移量
+ * @param state 状态
+ * @returns {*}
+ */
+export function activeMoveTo(offset, state) {
+  const {currActive, currBlock, pageName, plPageNum} = state
+
+  const comps = state.comps[currBlock] || []
+  if (comps.length == 0) {
+    console.error('comps is empty~~')
+    return state
+  }
+  //如果当前焦点在命令框上，按上下方向键则直接定位到第一个元素
+  if (currActive === C.CMD_INPUT) {
+    return {
+      ...state,
+      currActive: comps[0]
+    }
+  }
+  let index = indexOf(comps, currActive)
+  if (index < 0) {
+    return {
+      ...state,
+      currActive: comps[0],
+      plCurrPage: 1
+    }
+  } else {
+    index += offset
+    if (index >= comps.length) {
+      index = 0
+    } else if (index < 0) {
+      index = comps.length - 1
+    }
+
+    //如果当前是分页表格，则根据当前焦点计算当前页码
+    if (isPaginationTable(currBlock, pageName)) {
+      const currPage = calculateCurrPage(index, plPageNum)
+      return {
+        ...state,
+        currActive: comps[index],
+        plCurrPage: currPage
+      }
+    }
+
+    return {
+      ...state,
+      currActive: comps[index]
+    }
+  }
 }

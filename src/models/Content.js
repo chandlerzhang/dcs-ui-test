@@ -289,7 +289,8 @@ export default {
 
       const comps = {
         ...pls.comps,
-        [C.MAIN_BLOCK]: [C.CMD_INPUT, ...pls.map(pl=>F.genPlKey(pl))]
+        // [C.MAIN_BLOCK]: [C.CMD_INPUT, ...pls.map(pl=>F.genPlKey(pl))]
+        [C.MAIN_BLOCK]: pls.map(pl=>F.genPlKey(pl))
       }
       return {
         ...state,

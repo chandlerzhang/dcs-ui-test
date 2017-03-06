@@ -12,7 +12,7 @@ export default {
       return state
     }
 
-    const newComps = [C.MPROTECT_FN_KEY, C.MPROTECT_FD_KEY, C.SUBMIT_BTN_KEY, C.CMD_INPUT]
+    const newComps = [C.MPROTECT_FN_KEY, C.MPROTECT_FD_KEY, C.SUBMIT_BTN_KEY]
     const comps = {
       ...state.comps,
       [C.MAIN_BLOCK]: newComps
@@ -78,7 +78,7 @@ export default {
         F.stopEvent(event)
       }
 
-      const newComps = [C.CHECKIN_FROM_KEY, C.CHECKIN_TO_KEY, C.CHECKIN_NOPRINT_KEY, C.SUBMIT_BTN_KEY, C.CMD_INPUT]
+      const newComps = [C.CHECKIN_FROM_KEY, C.CHECKIN_TO_KEY, C.CHECKIN_NOPRINT_KEY, C.SUBMIT_BTN_KEY]
       const comps = {
         ...state.comps,
         [C.MAIN_BLOCK]: newComps
@@ -115,7 +115,7 @@ export default {
       message.error('请选择一个或多个旅客');
       return state
     }
-    const newComps = [C.PSTOP_NOTE_KEY, C.SUBMIT_BTN_KEY, C.CMD_INPUT]
+    const newComps = [C.PSTOP_NOTE_KEY, C.SUBMIT_BTN_KEY]
     const comps = {
       ...state.comps,
       [C.MAIN_BLOCK]: newComps
@@ -135,7 +135,7 @@ export default {
       message.error('请选择一个旅客');
       return state
     }
-    const newComps = [C.MPHONE_TE_KEY, C.SUBMIT_BTN_KEY, C.CMD_INPUT]
+    const newComps = [C.MPHONE_TE_KEY, C.SUBMIT_BTN_KEY]
     const comps = {
       ...state.comps,
       [C.MAIN_BLOCK]: newComps
@@ -150,7 +150,7 @@ export default {
   },
   ctrlBFn(state, event) {
 
-    const newComps = [C.PADD_CN_KEY, C.PADD_SEX1_KEY, C.PADD_SEX2_KEY, C.PADD_SEX3_KEY, C.PADD_DN_KEY, C.PADD_ETI_KEY, C.SUBMIT_BTN_KEY, C.CMD_INPUT]
+    const newComps = [C.PADD_CN_KEY, C.PADD_SEX1_KEY, C.PADD_SEX2_KEY, C.PADD_SEX3_KEY, C.PADD_DN_KEY, C.PADD_ETI_KEY, C.SUBMIT_BTN_KEY]
 
     const comps = {
       ...state.comps,
@@ -205,10 +205,6 @@ export default {
   },
   f4Fn(state, event) {
 
-    // if (state.currBlock === C.PSELECT_BLOCK) {
-    //   return state
-    // }
-
     const pls = state.selectPls
     if (pls.length == 0) {
       message.error('没有可选的对象！');
@@ -249,10 +245,6 @@ export default {
 
   },
   f2Fn(state, event) {
-
-    // if (state.currBlock === C.FLIGHTSWITCH_BLOCK) {
-    //   return state
-    // }
 
     const {fls} = state
     if (!(fls instanceof Array)) {
@@ -313,7 +305,8 @@ export default {
     const newComps = state.pls.map(pl=>F.genPlKey(pl))
     const comps = {
       ...state.comps,
-      [C.MAIN_BLOCK]: [...newComps, C.CMD_INPUT]
+      // [C.MAIN_BLOCK]: [...newComps, C.CMD_INPUT]
+      [C.MAIN_BLOCK]: newComps
     }
     const confirm = {
       ...state.confirm,
@@ -362,70 +355,10 @@ export default {
   },
   downFn(state, event) {
 
-    const {currActive, currBlock, pageName, plPageNum} = state
-
-    const comps = state.comps[currBlock] || []
-    if (comps.length == 0) {
-      console.error('comps is empty~~')
-      return state
-    }
-    let index = F.indexOf(comps, currActive)
-    if (index < 0) {
-      return {
-        ...state,
-        currActive: comps[0]
-      }
-    } else {
-      if (++index >= comps.length) {
-        index = 0
-      }
-
-      if (currBlock === C.MAIN_BLOCK && pageName === C.PAGE_PASSENGER_LIST && comps[index] !== C.CMD_INPUT) {
-        const currPage = F.calculateCurrPage(index, plPageNum)
-        return {
-          ...state,
-          currActive: comps[index],
-          plCurrPage: currPage
-        }
-      }
-
-      return {
-        ...state,
-        currActive: comps[index]
-      }
-    }
+    return F.activeMoveTo(1, state)
   },
   upFn(state, event) {
-    const {currActive, currBlock, pageName, plPageNum} = state
 
-    const comps = state.comps[currBlock] || []
-    if (comps.length == 0) {
-      console.error('comps is empty~~')
-      return state
-    }
-    let index = F.indexOf(comps, currActive)
-    if (index < 0) {
-      return {
-        ...state,
-        currActive: comps[0]
-      }
-    } else {
-      if (--index < 0) {
-        index = comps.length - 1
-      }
-      if (currBlock === C.MAIN_BLOCK && pageName === C.PAGE_PASSENGER_LIST && comps[index] !== C.CMD_INPUT) {
-        const currPage = F.calculateCurrPage(index, plPageNum)
-        return {
-          ...state,
-          currActive: comps[index],
-          plCurrPage: currPage
-        }
-      }
-
-      return {
-        ...state,
-        currActive: comps[index]
-      }
-    }
+    return F.activeMoveTo(-1, state)
   }
 }
