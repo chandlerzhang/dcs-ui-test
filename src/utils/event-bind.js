@@ -52,4 +52,7 @@ export default [{
   isMatch: (e)=>e.which == 50 && e.ctrlKey,
   async: true,
   funcName: 'ctrl2Fn'
+}, {
+  isMatch: (e)=>e.which == 114 && e.altKey,
+  funcName: 'altF3Fn'
 }]

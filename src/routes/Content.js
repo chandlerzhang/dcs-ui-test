@@ -1,6 +1,6 @@
 import React from 'react'
 import {connect} from 'dva'
-import {message, Modal} from 'antd'
+import {message, Affix} from 'antd'
 import PSelect from '../components/PSelect'
 import FStatus from '../components/FStatus'
 import Login from '../components/Login'
@@ -15,6 +15,7 @@ import Checkin from '../components/Checkin'
 import Confirm from '../components/Confirm'
 import ManualProtect from '../components/ManualProtect'
 import BindingInf from '../components/BindingInf'
+import MApi from '../components/MApi'
 import * as C from '../utils/Const'
 import * as F from '../utils/Func'
 
@@ -120,6 +121,13 @@ class Content extends React.Component {
         }
 
         return <BindingInf {...bindingInfProps}/>
+
+      case C.PAGE_MODIFY_API:
+
+        const mApiProps = {
+          selectPls, currActive, currBlock, pageName,
+        }
+        return <MApi {...mApiProps}/>
     }
   }
 
@@ -210,6 +218,7 @@ class Content extends React.Component {
         <div className="dcs-footer">
           <Footer/>
         </div>
+
 
         <Confirm {...confirmProps}/>
       </div>

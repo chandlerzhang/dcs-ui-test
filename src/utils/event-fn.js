@@ -31,6 +31,14 @@ export default {
 
     yield put({type: 'showBindingInf', infs: infs || []})
   },
+  altF3Fn(state, event) {
+
+    const {selectPls} = state
+    if (selectPls.length == 0) {
+      message.error('请选择一个旅客')
+      return state
+    }
+  },
   ctrl5Fn(state, event) {
 
     const {selectPls} = state
