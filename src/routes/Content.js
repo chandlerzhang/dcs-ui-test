@@ -242,8 +242,6 @@ Content.PropTypes = {
   passengerSelectCurrPage: React.PropTypes.number,
   passengerOperationPageNum: React.PropTypes.number,
   passengerOperationCurrPage: React.PropTypes.number,
-  // selectableInfs: React.PropTypes.array,
-  // selectedInfs: React.PropTypes.array,
   confirm: React.PropTypes.object,
 }
 

@@ -29,9 +29,6 @@ export default {
     passengerOperationPageNum: 8,
     passengerOperationCurrPage: 1,
 
-    // selectableInfs: [],//可选婴儿
-    // selectedInfs: [],//已选婴儿
-
     confirm: {
       show: false,
       content: ''
@@ -77,6 +74,20 @@ export default {
 
   effects: {
 
+    *doCancelCheckin({pls}, {call, put, select}){
+
+      const r = yield call(S.cancelCheckin, {pls})
+      console.log('doCancel', r)
+      try {
+        if (!r || !r.success) {
+          console.error('doCancelCheckin error')
+          return
+        }
+        yield put({type: 'updateAfterCancelCheckin', pls})
+      } finally {
+        yield put({type: 'closeConfirm'})
+      }
+    },
     *doBindingInf({ps, cb, bind}, {call, put, select}){
 
       let r;
@@ -125,6 +136,78 @@ export default {
   },
 
   reducers: {
+    updateAfterCancelCheckin(state, {pls:change}){
+
+      const {pls, selectPls} = state
+
+      const newPls = pls.map(pl=> {
+        const m = change.some(p=>p.uui === pl.uui)
+        if (m) {
+          pl.wci = false
+        }
+        return pl
+      })
+
+      const newSelectPls = selectPls.map(pl=> {
+        const m = change.some(p=>p.uui === pl.uui)
+        if (m) {
+          pl.wci = false
+        }
+
+        return pl
+      })
+
+      return {
+        ...state,
+        pls: newPls,
+        selectPls: newSelectPls
+      }
+
+    },
+    closeConfirm(state){
+
+      // const {currBlock, currActive} = state
+      const {comps} = state
+
+      const currComps = comps[C.MAIN_BLOCK]
+      let currActive = C.CMD_INPUT
+      if (currComps && currComps.length > 0) {
+        currActive = currComps[0]
+      }
+      return {
+        ...state,
+        currBlock: C.MAIN_BLOCK,
+        currActive,
+        confirm: {
+          ...state.confirm,
+          show: false,
+          onOk: null,
+          onCancel: null
+        }
+      }
+    },
+    showConfirm(state, {content, onOk, onCancel}){
+
+      const confirm = {
+        ...state.confirm,
+        show: true,
+        content,
+        onOk,
+        onCancel
+      }
+      const newComps = [C.OK_BTN_KEY, C.CANCEL_BTN_KEY]
+      const comps = {
+        ...state.comps,
+        [C.CONFIRM_BLOCK]: newComps
+      }
+      return {
+        ...state,
+        currBlock: C.CONFIRM_BLOCK,
+        currActive: newComps[0],
+        comps,
+        confirm
+      }
+    },
     updateBindingInf(state, {result, ps, bind}){
 
       //todo 成人可以绑定多个婴儿，目前判断婴儿是否可绑定逻辑无法确认，暂时不做
@@ -184,10 +267,10 @@ export default {
 
       return Evt.ctrl5Fn(state)
     },
-    closeConfirm(state){
-
-      return Evt.escFn(state)
-    },
+    // closeConfirm(state){
+    //
+    //   return Evt.escFn(state)
+    // },
     executeSetEt(state, {isEt, pl}){
 
       const {pls, selectPls} = state

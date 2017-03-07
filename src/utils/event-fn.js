@@ -4,6 +4,22 @@ import * as S from '../services/Content'
 import {message} from 'antd'
 
 export default {
+  *ctrl2Fn(state, {call, put, select}, event) {
+
+    const {selectPls} = state
+    const validPls = selectPls.filter(pl=>pl.wci)
+    if (validPls.length == 0) {
+      message.error('请选择一个或多个已值机的旅客')
+      return
+    }
+    yield put({
+      type: 'showConfirm', content: `您确认取消这${validPls.length}位旅客的值机吗？`, onOk(dispatch){
+        dispatch({type: 'content/doCancelCheckin', pls: validPls})
+      }, onCancel(dispatch){
+        dispatch({type: 'content/closeConfirm'})
+      }
+    })
+  },
   *alt7Fn(state, {call, put, select}, event) {
 
     let {pls, selectPls} = state

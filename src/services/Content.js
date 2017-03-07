@@ -46,3 +46,10 @@ export async function unBindInf(p) {
     method: 'get'
   })
 }
+
+export async function cancelCheckin(p) {
+
+  return F.request('./data/unBindInf.json', {
+    method: 'get'
+  })
+}
