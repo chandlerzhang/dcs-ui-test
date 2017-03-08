@@ -4,6 +4,17 @@ import * as S from '../services/Content'
 import {message} from 'antd'
 
 export default {
+  *alt0Fn(state, {call, put, select}, event) {
+
+    const {selectPls} = state
+    if (selectPls.length == 0) {
+      message.error('请选择一个或多个旅客')
+      return
+    }
+
+    const logs = F.upperCase(yield call(S.fetchLogs, {pls: selectPls}))
+    yield put({type: 'showLogs', logs})
+  },
   *escFn(state, {call, put, select}, event) {
 
     const {confirm} = state
@@ -12,7 +23,7 @@ export default {
     if (isConfirmShow) {
       yield put({type: 'closeConfirm'})
     } else {
-      yield put({type:'normalEsc'})
+      yield put({type: 'normalEsc'})
     }
   },
   *alt4Fn(state, {call, put, select}, event) {

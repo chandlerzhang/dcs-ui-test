@@ -46,6 +46,7 @@ export const PAGE_CHECKIN = 'PAGE_CHECKIN'
 export const PAGE_MANUAL_PROTECT = 'PAGE_MANUAL_PROTECT'
 export const PAGE_BINDING_INF = 'PAGE_BINDING_INF'
 export const PAGE_MODIFY_API = 'PAGE_MODIFY_API'
+export const PAGE_LOG_LIST = 'PAGE_LOG_LIST'
 
 /**
  * 提交按钮通用Key

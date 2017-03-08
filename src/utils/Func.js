@@ -480,3 +480,8 @@ export function getSelectableInfs(selectPls) {
 export function genBindingInfPlKey(pl) {
   return `binding-inf-${pl.uui}`
 }
+
+export function genLogKey(log) {
+
+  return `log-key-${log.id}`
+}

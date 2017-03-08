@@ -19,6 +19,8 @@ export default {
     pageName: C.PAGE_PASSENGER_LIST,//current page name
     comps: {},
 
+    serverData: null,//data from server,work for all other pages
+
     plPageNum: 10,
     plCurrPage: 1,
 

@@ -3,6 +3,25 @@ import * as C from '../utils/Const'
 import Evt from '../utils/event-fn'
 
 export default {
+  showLogs(state, {logs}){
+
+    const newComps = logs.map((log,i)=>{
+      log.id = i
+      return F.genLogKey(log)
+    })
+    const comps = {
+      ...state.comps,
+      [C.MAIN_BLOCK]: newComps
+    }
+    return {
+      ...state,
+      pageName: C.PAGE_LOG_LIST,
+      currBlock: C.MAIN_BLOCK,
+      currActive: newComps[0],
+      comps,
+      serverData: logs
+    }
+  },
   normalEsc(state){
     const {pageName, currActive} = state
 

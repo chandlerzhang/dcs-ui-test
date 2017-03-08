@@ -60,3 +60,9 @@ export async function setMorC(p) {
     method: 'get'
   })
 }
+
+export async function fetchLogs(p) {
+  return F.request('./data/logs.json', {
+    method: 'get'
+  })
+}
