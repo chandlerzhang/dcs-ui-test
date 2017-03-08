@@ -38,6 +38,21 @@ export default {
       message.error('请选择一个旅客')
       return state
     }
+    const newComps = [ C.MAPI_LNAME_KEY, C.MAPI_FNAME_KEY, C.MAPI_SEX_KEY, C.MAPI_DB_KEY,
+      C.MAPI_DNA_KEY, C.MAPI_COUNTRY_KEY, C.MAPI_ITYPE_KEY, C.MAPI_INUMBER_KEY, C.MAPI_DISABLE_KEY, C.MAPI_STYLE_KEY, C.MAPI_TTYPE_KEY, C.MAPI_TNUMBER_KEY,
+      C.MAPI_PASSPORT_KEY, C.SUBMIT_BTN_KEY]
+    const comps = {
+      ...state.comps,
+      [C.MAIN_BLOCK]: newComps
+    }
+
+    return {
+      ...state,
+      pageName: C.PAGE_MODIFY_API,
+      currBlock: C.MAIN_BLOCK,
+      currActive: newComps[0],
+      comps
+    }
   },
   ctrl5Fn(state, event) {
 

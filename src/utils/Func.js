@@ -295,6 +295,7 @@ export function getOperationBtns(state, dispatch) {
         enable: selectPls.some(pl=>pl.wci),
         errmsg: '所选的旅客中必须包含已值机的旅客',
         onClick(){
+          dispatch({type: 'content/asyncEventHandler', handler: {fn: 'ctrl2Fn'}})
         }
       }, {
         text: '候补',
@@ -366,6 +367,7 @@ export function getOperationBtns(state, dispatch) {
         enable: selectPls.length == 1,
         errmsg: '请选择一个旅客',
         onClick(){
+          dispatch({type: 'content/eventHandler', handler: {fn: 'altF3Fn'}})
         }
       }]
       btns.sort((b1, b2)=>b2.enable - b1.enable)
