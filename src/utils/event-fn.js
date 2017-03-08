@@ -4,6 +4,40 @@ import * as S from '../services/Content'
 import {message} from 'antd'
 
 export default {
+  *escFn(state, {call, put, select}, event) {
+
+    const {confirm} = state
+    const isConfirmShow = confirm.show
+
+    if (isConfirmShow) {
+      yield put({type: 'closeConfirm'})
+    } else {
+      yield put({type:'normalEsc'})
+    }
+  },
+  *alt4Fn(state, {call, put, select}, event) {
+
+    const {selectPls} = state
+    if (selectPls.length !== 1 || selectPls[0].sex === 'I') {
+      message.error('请选择一个非婴儿旅客')
+      return
+    }
+    const pl = selectPls[0]
+    if ($.trim(pl.riu) !== '') {
+      message.error('该旅客已经绑定婴儿，无法操作')
+      return
+    }
+    const isM = pl.sex === 'M'
+    const tips = `您确认要将该旅客变更为${isM ? `儿童` : `成人`}吗？`
+    yield put({
+      type: 'showConfirm', content: tips, onOk(dispatch){
+        dispatch({type: 'content/doSetMOrC', pl: pl})
+      }, onCancel(dispatch){
+        dispatch({type: 'content/closeConfirm'})
+      }
+    })
+
+  },
   *ctrl2Fn(state, {call, put, select}, event) {
 
     const {selectPls} = state
@@ -38,7 +72,7 @@ export default {
       message.error('请选择一个旅客')
       return state
     }
-    const newComps = [ C.MAPI_LNAME_KEY, C.MAPI_FNAME_KEY, C.MAPI_SEX_KEY, C.MAPI_DB_KEY,
+    const newComps = [C.MAPI_LNAME_KEY, C.MAPI_FNAME_KEY, C.MAPI_SEX_KEY, C.MAPI_DB_KEY,
       C.MAPI_DNA_KEY, C.MAPI_COUNTRY_KEY, C.MAPI_ITYPE_KEY, C.MAPI_INUMBER_KEY, C.MAPI_DISABLE_KEY, C.MAPI_STYLE_KEY, C.MAPI_TTYPE_KEY, C.MAPI_TNUMBER_KEY,
       C.MAPI_PASSPORT_KEY, C.SUBMIT_BTN_KEY]
     const comps = {
@@ -339,36 +373,6 @@ export default {
       currBlock: C.FLIGHTSWITCH_BLOCK,
       comps,
       currActive
-    }
-  },
-  escFn(state, event) {
-
-    const {pageName, currActive} = state
-
-    if (pageName !== C.PAGE_PASSENGER_LIST && currActive !== C.CMD_INPUT) {
-      return {
-        ...state,
-        currBlock: C.MAIN_BLOCK,
-        currActive: C.CMD_INPUT,
-      }
-    }
-
-    const newComps = state.pls.map(pl=>F.genPlKey(pl))
-    const comps = {
-      ...state.comps,
-      // [C.MAIN_BLOCK]: [...newComps, C.CMD_INPUT]
-      [C.MAIN_BLOCK]: newComps
-    }
-    const confirm = {
-      ...state.confirm,
-      show: false
-    }
-    return {
-      ...state,
-      currBlock: C.MAIN_BLOCK,
-      currActive: C.CMD_INPUT,
-      pageName: C.PAGE_PASSENGER_LIST,
-      comps, confirm
     }
   },
   f1Fn(state, event) {

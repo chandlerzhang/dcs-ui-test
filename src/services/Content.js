@@ -53,3 +53,10 @@ export async function cancelCheckin(p) {
     method: 'get'
   })
 }
+
+export async function setMorC(p) {
+
+  return F.request('./data/unBindInf.json', {
+    method: 'get'
+  })
+}

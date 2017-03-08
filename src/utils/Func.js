@@ -332,9 +332,10 @@ export function getOperationBtns(state, dispatch) {
         }
       }, {
         text: '设置成人/儿童',
-        enable: selectPls.length == 1 && selectPls[0].sex !== 'INF',
+        enable: selectPls.length == 1 && selectPls[0].sex !== 'I',
         errmsg: '请选择一个非婴儿旅客',
         onClick(){
+          dispatch({type: 'content/asyncEventHandler', handler: {fn: 'alt4Fn'}})
         }
       }, {
         text: '绑定婴儿',

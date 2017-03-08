@@ -14,6 +14,8 @@ export default {
     selectPls: [],//selected passenger list
     currBlock: C.MAIN_BLOCK,//current active block
     currActive: C.CMD_INPUT,//current active item
+    lastBlock: null,//last active block
+    lastActive: null,//last active item
     pageName: C.PAGE_PASSENGER_LIST,//current page name
     comps: {},
 
@@ -74,10 +76,22 @@ export default {
 
   effects: {
 
+    *doSetMOrC({pl}, {call, put, select}){
+
+      const r = yield call(S.setMorC, {pl})
+      try {
+        if (!r || !r.success) {
+          console.error('doSetMOrC error')
+          return
+        }
+        yield put({type: 'updateAfterSetMOrC', pl})
+      } finally {
+        yield put({type: 'closeConfirm'})
+      }
+    },
     *doCancelCheckin({pls}, {call, put, select}){
 
       const r = yield call(S.cancelCheckin, {pls})
-      console.log('doCancel', r)
       try {
         if (!r || !r.success) {
           console.error('doCancelCheckin error')
@@ -136,6 +150,66 @@ export default {
   },
 
   reducers: {
+    normalEsc(state){
+      const {pageName, currActive} = state
+
+      if (pageName !== C.PAGE_PASSENGER_LIST && currActive !== C.CMD_INPUT) {
+        return {
+          ...state,
+          currBlock: C.MAIN_BLOCK,
+          currActive: C.CMD_INPUT,
+        }
+      }
+
+      const newComps = state.pls.map(pl=>F.genPlKey(pl))
+      const comps = {
+        ...state.comps,
+        // [C.MAIN_BLOCK]: [...newComps, C.CMD_INPUT]
+        [C.MAIN_BLOCK]: newComps
+      }
+      const confirm = {
+        ...state.confirm,
+        show: false
+      }
+      return {
+        ...state,
+        currBlock: C.MAIN_BLOCK,
+        currActive: C.CMD_INPUT,
+        pageName: C.PAGE_PASSENGER_LIST,
+        comps, confirm
+      }
+    },
+    updateAfterSetMOrC(state, {pl}){
+
+      const {pls, selectPls} = state
+      const isM = pl.sex === 'M'
+      const newPls = pls.map(p=> {
+        if (p.uui === pl.uui) {
+          if (isM) {
+            p.sex = 'C'
+          } else {
+            p.sex = 'M'
+          }
+        }
+        return p
+      })
+      const newSelectPls = selectPls.map(p=> {
+        if (p.uui === pl.uui) {
+          if (isM) {
+            p.sex = 'C'
+          } else {
+            p.sex = 'M'
+          }
+        }
+        return p
+      })
+
+      return {
+        ...state,
+        pls: newPls,
+        selectPls: newSelectPls
+      }
+    },
     updateAfterCancelCheckin(state, {pls:change}){
 
       const {pls, selectPls} = state
@@ -167,17 +241,26 @@ export default {
     closeConfirm(state){
 
       // const {currBlock, currActive} = state
-      const {comps} = state
+      const {comps, lastActive, lastBlock} = state
 
       const currComps = comps[C.MAIN_BLOCK]
       let currActive = C.CMD_INPUT
       if (currComps && currComps.length > 0) {
         currActive = currComps[0]
       }
+      if (lastActive) {
+        currActive = lastActive
+      }
+      let currBlock = C.MAIN_BLOCK
+      if (lastBlock) {
+        currBlock = lastBlock
+      }
       return {
         ...state,
-        currBlock: C.MAIN_BLOCK,
+        currBlock,
         currActive,
+        lastBlock: null,
+        lastActive: null,
         confirm: {
           ...state.confirm,
           show: false,
@@ -205,7 +288,9 @@ export default {
         currBlock: C.CONFIRM_BLOCK,
         currActive: newComps[0],
         comps,
-        confirm
+        confirm,
+        lastBlock: state.currBlock,
+        lastActive: state.currActive
       }
     },
     updateBindingInf(state, {result, ps, bind}){

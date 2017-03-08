@@ -13,8 +13,6 @@ export default class Confirm extends React.Component {
     const isCurrPage = currBlock == C.CONFIRM_BLOCK
 
     return <Modal title="提示" visible={confirm.show}
-                  onOk={onOk}
-                  onCancel={onCancel}
                   afterClose={()=> {
                     F.focusActive()
                   }}

@@ -242,6 +242,8 @@ Content.PropTypes = {
   selectPls: React.PropTypes.array,
   currBlock: React.PropTypes.string,
   currActive: React.PropTypes.string,
+  lastBlock: React.PropTypes.string,
+  lastActive: React.PropTypes.string,
   pageName: React.PropTypes.string,
   comps: React.PropTypes.object,
   plPageNum: React.PropTypes.number,

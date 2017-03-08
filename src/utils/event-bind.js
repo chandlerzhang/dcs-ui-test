@@ -15,6 +15,7 @@ export default [{
   funcName: 'f2Fn'
 }, {
   isMatch: (e)=>e.which == 27,
+  async: true,
   funcName: 'escFn'
 }, {
   isMatch: (e)=>e.which == 115,
@@ -55,4 +56,8 @@ export default [{
 }, {
   isMatch: (e)=>e.which == 114 && e.altKey,
   funcName: 'altF3Fn'
+}, {
+  isMatch: (e)=>e.which == 52 && e.altKey,
+  async: true,
+  funcName: 'alt4Fn'
 }]
