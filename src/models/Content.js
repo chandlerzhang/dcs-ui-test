@@ -479,16 +479,18 @@ export default {
         pls: payLoad
       }
     },
-    select(state, {record}){
+    select(state, {record, isClick}){
       const {selectPls} = state
       selectPls.push(record)
       return {
         ...state,
         selectPls,
-        passengerSelectCurrPage: 1
+        passengerSelectCurrPage: 1,
+        currBlock: isClick ? C.MAIN_BLOCK : state.currBlock,
+        currActive: isClick ? F.genPlKey(record) : state.currActive,
       }
     },
-    unselect(state, {record}){
+    unselect(state, {record, isClick}){
 
       const {selectPls, currBlock, currActive} = state
 
@@ -496,8 +498,13 @@ export default {
 
       const isInPSelectBlock = currBlock === C.PSELECT_BLOCK
       const isNullSelected = leftPls.length == 0
-      const newBlock = isInPSelectBlock && isNullSelected ? C.MAIN_BLOCK : currBlock
-      const newActive = isInPSelectBlock && isNullSelected ? C.CMD_INPUT : currActive
+      let newBlock = isInPSelectBlock && isNullSelected ? C.MAIN_BLOCK : currBlock
+      let newActive = isInPSelectBlock && isNullSelected ? C.CMD_INPUT : currActive
+
+      if (isClick) {
+        newBlock = C.MAIN_BLOCK
+        newActive = F.genPlKey(record)
+      }
 
       return {
         ...state,

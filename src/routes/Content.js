@@ -52,9 +52,9 @@ class Content extends React.Component {
           },
           onRowClick(isSelected, record){
             if (!isSelected) {
-              dispatch({type: 'content/select', record: record})
+              dispatch({type: 'content/select', record: record, isClick: true})
             } else {
-              dispatch({type: 'content/unselect', record: record})
+              dispatch({type: 'content/unselect', record: record, isClick: true})
             }
           }
         }
