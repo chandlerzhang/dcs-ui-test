@@ -43,14 +43,15 @@ class Content extends React.Component {
             }
           },
           onRowSelectAll(selected){
-            if (selected) {
-              dispatch({type: 'content/selectAll'})
-            } else {
-              dispatch({type: 'content/unselectAll'})
-            }
+            // if (selected) {
+            //   dispatch({type: 'content/selectAll'})
+            // } else {
+            //   dispatch({type: 'content/unselectAll'})
+            // }
+            dispatch({type: 'content/eventHandler', handler: {fn: 'ctrlAFn'}})
           },
           onRowClick(isSelected, record){
-            if (isSelected) {
+            if (!isSelected) {
               dispatch({type: 'content/select', record: record})
             } else {
               dispatch({type: 'content/unselect', record: record})

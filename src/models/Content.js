@@ -490,27 +490,41 @@ export default {
     },
     unselect(state, {record}){
 
-      const {selectPls} = state
+      const {selectPls, currBlock, currActive} = state
 
       const leftPls = selectPls.filter(pl=>pl.uui != record.uui)
-      return {
-        ...state,
-        selectPls: leftPls
-      }
-    },
-    selectAll(state) {
+
+      const isInPSelectBlock = currBlock === C.PSELECT_BLOCK
+      const isNullSelected = leftPls.length == 0
+      const newBlock = isInPSelectBlock && isNullSelected ? C.MAIN_BLOCK : currBlock
+      const newActive = isInPSelectBlock && isNullSelected ? C.CMD_INPUT : currActive
 
       return {
         ...state,
-        selectPls: state.pls,
-        passengerSelectCurrPage: 1
+        selectPls: leftPls,
+        currBlock: newBlock,
+        currActive: newActive
       }
     },
-    unselectAll(state) {
-      return {
-        ...state,
-        selectPls: []
-      }
-    }
+    // selectAll(state) {
+    //
+    //   return {
+    //     ...state,
+    //     selectPls: state.pls,
+    //     passengerSelectCurrPage: 1
+    //   }
+    // },
+    // unselectAll(state) {
+    //   const {currActive, currBlock} = state
+    //   const isInPSelectBlock = currBlock === C.PSELECT_BLOCK
+    //   const newBlock = isInPSelectBlock ? C.MAIN_BLOCK : currBlock
+    //   const newActive = isInPSelectBlock ? C.CMD_INPUT : currActive
+    //   return {
+    //     ...state,
+    //     selectPls: [],
+    //     currBlock: newBlock,
+    //     currActive: newActive
+    //   }
+    // }
   },
 }

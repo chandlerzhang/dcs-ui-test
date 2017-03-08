@@ -381,12 +381,20 @@ export default {
     }
   },
   ctrlAFn(state, event) {
-    const {pls, selectPls, pageName} = state
+    const {pls, selectPls, pageName, currBlock, currActive} = state
     if (pageName != C.PAGE_PASSENGER_LIST) {
       return state
     }
+    const newSelectPls = pls.length == selectPls.length ? [] : pls
+    const isInPSelectBlock = currBlock === C.PSELECT_BLOCK
+    const isEmpty = newSelectPls.length == 0
+    const newBlock = isInPSelectBlock && isEmpty ? C.MAIN_BLOCK : currBlock
+    const newActive = isInPSelectBlock && isEmpty ? C.CMD_INPUT : currActive
+
     return {
-      selectPls: pls.length == selectPls.length ? [] : pls
+      selectPls: newSelectPls,
+      currBlock: newBlock,
+      currActive: newActive
     }
   },
   downFn(state, event) {

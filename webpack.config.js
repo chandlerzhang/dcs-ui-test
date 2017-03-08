@@ -5,7 +5,7 @@ const path = require('path')
 
 module.exports = function (webpackConfig, env) {
 
-  console.log(webpackConfig)
+  // console.log(webpackConfig)
   const isDev = env === 'development'
 
   webpackConfig.babel.plugins.push('transform-runtime')
