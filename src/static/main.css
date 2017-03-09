@@ -266,7 +266,6 @@ body{overflow: hidden;}
 	color:#666666;
 }
 .flightList {
-	height: 470px;
 	overflow: auto;
 	margin-top: 5px;
 }

@@ -4,45 +4,52 @@ import {Row , Col , Checkbox , Icon} from 'antd'
 
 export default class FlightList extends React.Component {
 
-	render () {
-		// const columns = [
-		// 	 { title: '状态', dataIndex: 'status', key: 'status' , width:80 },
-		// 	 { title: '序号', dataIndex: 'no', key: 'no' , width:80},
-		// 	 { title: '姓名', dataIndex: 'name', key: 'name' , width:150},
-		// 	 { title: '性质', dataIndex: 'nature', key: 'nature' , width:80},
-		// 	 { title: '订单号', dataIndex: 'orderNo', key: 'orderNo' , width:180},
-		// 	 { title: '座位', dataIndex: 'seatNo', key: 'seatNo' , width:80},
-		// 	 { title: '目的地', dataIndex: 'destination', key: 'destination' , width:100},
-		// 	 { title: '免额行李', dataIndex: 'freeBaggage', key: 'freeBaggage', width:150 },
-		// 	 { title: '行李/重量', dataIndex: 'weight', key: 'weight', width:80},
-		// 	 { title: '服务', dataIndex: 'service', key: 'service' , width:100}
-		// ]
+	constructor () {
+		super();
+		this.state = {
+			listStyle:{
+				height:0
+			}
+		}
+		
+	}
 
-		const data = [
-			{key:1 , status:'退，AC', no:'123' ,name:'ZHANG SAN', nature:'成人' , orderNo:'Ed30d3jd95653' , seatNo:'22B' , destination:'MWN',freeBaggage:'25 KA=0',weight:'15kg' , service:'VIP'},
-			{key:2 , status:'退，AC', no:'124' ,name:'ZHANG SAN', nature:'成人' , orderNo:'Ed30d3jd95653' , seatNo:'22B' , destination:'MWN',freeBaggage:'25 KA=0',weight:'15kg' , service:'VIP'},
-			{key:3 , status:'退，AC', no:'125' ,name:'ZHANG SAN', nature:'成人' , orderNo:'Ed30d3jd95653' , seatNo:'22B' , destination:'MWN',freeBaggage:'25 KA=0',weight:'15kg' , service:'VIP'},
-			{key:4 , status:'退，AC', no:'126' ,name:'ZHANG SAN', nature:'成人' , orderNo:'Ed30d3jd95653' , seatNo:'22B' , destination:'MWN',freeBaggage:'25 KA=0',weight:'15kg' , service:'VIP'},
-			{key:5 , status:'退，AC', no:'127' ,name:'ZHANG SAN', nature:'成人' , orderNo:'Ed30d3jd95653' , seatNo:'22B' , destination:'MWN',freeBaggage:'25 KA=0',weight:'15kg' , service:'VIP'},
-			{key:6 , status:'退，AC', no:'128' ,name:'ZHANG SAN', nature:'成人' , orderNo:'Ed30d3jd95653' , seatNo:'22B' , destination:'MWN',freeBaggage:'25 KA=0',weight:'15kg' , service:'VIP'},
-			{key:7 , status:'退，AC', no:'129' ,name:'ZHANG SAN', nature:'成人' , orderNo:'Ed30d3jd95653' , seatNo:'22B' , destination:'MWN',freeBaggage:'25 KA=0',weight:'15kg' , service:'VIP'},
-			{key:8 , status:'退，AC', no:'130' ,name:'ZHANG SAN', nature:'成人' , orderNo:'Ed30d3jd95653' , seatNo:'22B' , destination:'MWN',freeBaggage:'25 KA=0',weight:'15kg' , service:'VIP'},
-			{key:9 , status:'退，AC', no:'131' ,name:'ZHANG SAN', nature:'成人' , orderNo:'Ed30d3jd95653' , seatNo:'22B' , destination:'MWN',freeBaggage:'25 KA=0',weight:'15kg' , service:'VIP'},
-			{key:10 , status:'退，AC', no:'132' ,name:'ZHANG SAN', nature:'成人' , orderNo:'Ed30d3jd95653' , seatNo:'22B' , destination:'MWN',freeBaggage:'25 KA=0',weight:'15kg' , service:'VIP'}
-		]
-		// <Table
-		// 	    columns={columns}
-		// 	    expandedRowRender={record => <p>{record.destination}</p>}
-		// 	    dataSource={data}
-		// 	    pagination={{ pageSize: 50 }} scroll={{ y: 400 }} 
-		// 	    bordered
-  //   			size="middle"
-  // 			/>
+	componentDidMount = () => {
+		let listHeight = window.innerHeight - 340 ;
+		this.setState ({
+			listStyle: {
+				height:listHeight+'px' 
+			}
+		}) 
+	}
+
+	onHandleStatusVisible () {
+		console.log("显示隐藏航班状态")
+	}
+
+	render () {
+		const data = [];
+		for(let i = 0 ; i < 20 ; i++) {
+			data.push({
+				key:i , 
+				status:'退，AC', 
+				no:'123'+i ,
+				name:'ZHANG SAN', 
+				nature:'成人' , 
+				orderNo:'Ed30d3jd95653' , 
+				seatNo:'22B' , 
+				destination:'MWN',
+				freeBaggage:'25 KA=0',
+				weight:'15kg' , 
+				service:'VIP'
+			})
+		}
+	
   		const rows = [] ;
   		for(let i = 0 ; i < data.length ; i++) {
   			let flight = data[i];
   			rows.push(
-  				<Row className={styles.flightRow}>
+  				<Row className={styles.flightRow} key={flight.key}>
   					<Col span={1}><Checkbox /></Col>
 				 	<Col span={2}>{flight.status}</Col>
 				 	<Col span={1}>{flight.no}</Col>
@@ -59,7 +66,7 @@ export default class FlightList extends React.Component {
   			)
   		}
 		return (
-			<div className={styles.flightList}>
+			<div className={styles.flightList} style={this.state.listStyle}>
 				 <Row className={styles.flightRow}>
 				 	<Col span={1}><Checkbox /></Col>
 				 	<Col span={2}>状态</Col>

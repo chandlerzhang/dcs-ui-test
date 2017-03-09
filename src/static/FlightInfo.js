@@ -5,8 +5,8 @@ import FlightListContainer from './FlightListContainer'
 
 class FlightInfo extends React.Component {
 
-	constructor(props) {
-		super(props);
+	constructor() {
+		super();
 		this.state = {
 			src:'./img/u337.png' ,
 			collapsePanelStyle:{
@@ -26,6 +26,8 @@ class FlightInfo extends React.Component {
 			}
 		})
 	}
+
+
 
 	render() {
 		return (

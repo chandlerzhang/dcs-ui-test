@@ -12,6 +12,7 @@ class FlightListContainer extends React.Component {
 			title:'已选旅客(F4)',
 			tabData:['ZHANG SAN','LI SI','WANG WU','ZAHO LIU']
 		}
+		
 	}
 
 	render () {
