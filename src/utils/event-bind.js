@@ -73,4 +73,8 @@ export default [{
   isMatch: (e)=>e.which == 119 ,
   async: true,
   funcName: 'f8Fn'
+}, {
+  isMatch: (e)=>e.which == 85 && e.altKey ,
+  async: true,
+  funcName: 'altUFn'
 }]

@@ -22,6 +22,7 @@ import Log from '../components/Log'
 import PbAdd from '../components/PbAdd'
 import PbDel from '../components/PbDel'
 import CancelFee from '../components/CancelFee'
+import PbFeeAdd from '../components/PbFeeAdd'
 
 const renderComp = (props)=> {
   const {content, dispatch} = props
@@ -163,6 +164,19 @@ const renderComp = (props)=> {
       }
 
       return <CancelFee {...cancelFeeProps}/>
+
+    case C.PAGE_FEE_ADD:
+      if (selectPls.length !== 1) {
+        message.error('请选择一个旅客')
+        return null
+      }
+      const feeAddProps = {
+        currBlock, currActive, pageName,
+        fees: content.serverData,
+      }
+
+      return <PbFeeAdd {...feeAddProps} />
+
   }
 }
 

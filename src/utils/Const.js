@@ -50,6 +50,7 @@ export const PAGE_LOG_LIST = 'PAGE_LOG_LIST'
 export const PAGE_PB_ADD = 'PAGE_PB_ADD'
 export const PAGE_PB_DEL = 'PAGE_PB_DEL'
 export const PAGE_CANCEL_FEE = 'PAGE_CANCEL_FEE'
+export const PAGE_FEE_ADD = 'PAGE_FEE_ADD'
 
 /**
  * 提交按钮通用Key
@@ -112,5 +113,8 @@ export const PBADD_USEID_KEY = 'PBADD_USEID_KEY'
 export const PBADD_ID_KEY = 'PBADD_ID_KEY'
 export const PBADD_WEIGHT_KEY = 'PBADD_WEIGHT_KEY'
 export const PBADD_NOPRINT_KEY = 'PBADD_NOPRINT_KEY'
+
+export const PBFEE_SS_KEY = 'PBFEE_SS_KEY'
+export const PBFEE_ZL_KEY = 'PBFEE_ZL_KEY'
 
 

@@ -3,6 +3,23 @@ import * as C from '../utils/Const'
 import Evt from '../utils/event-fn'
 
 export default {
+  showPbFeeAdd(state, {fees}){
+
+    const newComps = [C.PBFEE_SS_KEY,C.PBFEE_ZL_KEY, C.SUBMIT_BTN_KEY]
+    const comps = {
+      ...state.comps,
+      [C.MAIN_BLOCK]: newComps
+    }
+
+    return {
+      ...state,
+      currBlock: C.MAIN_BLOCK,
+      currActive: newComps[0],
+      comps,
+      pageName: C.PAGE_FEE_ADD,
+      serverData: fees
+    }
+  },
   showCancelFee(state, {fees}){
 
     const newComps = [...fees.feeMsg.map(pb=>F.genKey(pb, 'fee')), C.SUBMIT_BTN_KEY]

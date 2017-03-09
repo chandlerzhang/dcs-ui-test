@@ -48,8 +48,21 @@ export default class CancelFee extends React.Component {
 
     const isCurrPage = pageName === C.PAGE_CANCEL_FEE && currBlock === C.MAIN_BLOCK
 
+    let tableTips;
+    if (needSelect) {
+      tableTips = (o)=> <span><span className="dcs-circle">i</span>共<span
+        className="dcs-pl-table-num">{fees.length}</span>项费用，已选择<span
+        className="dcs-pl-table-num">{this.state.selected.length}</span>项</span>
+    } else {
+
+      const count = fees.reduce((p1, p2)=>(p1.bcnt || 0) + p2.bcnt)
+      tableTips = (o)=> <span><span className="dcs-circle">i</span>收费数量<span
+        className="dcs-pl-table-num">{fees.length}</span>，收费合计<span
+        className="dcs-pl-table-num">{count}</span>元</span>
+    }
+
     const rowSelection = {
-      selectedRowKeys: this.state.selected.map(pb=>F.genKey(pb,'fee')),
+      selectedRowKeys: this.state.selected.map(pb=>F.genKey(pb, 'fee')),
       onChange: (selectedRowKeys, selectedRows) => {
       },
       onSelect: this.onSelect.bind(this),
@@ -66,10 +79,8 @@ export default class CancelFee extends React.Component {
         <Col span={24}>
 
           <Table className="dcs-pl-table"
-                 title={(o)=> <span><span className="dcs-circle">i</span>共<span
-                   className="dcs-pl-table-num">{fees.length}</span>项费用，已选择<span
-                   className="dcs-pl-table-num">{this.state.selected.length}</span>项</span>}
-                 rowKey={pl=>F.genKey(pl,'fee')}
+                 title={tableTips}
+                 rowKey={pl=>F.genKey(pl, 'fee')}
                  rowSelection={needSelect ? rowSelection : null}
                  columns={[
                    {title: '订单号', dataIndex: 'obn', key: '2', width: 150},
@@ -81,7 +92,7 @@ export default class CancelFee extends React.Component {
                  onRowClick={()=> {
                  }}
                  rowClassName={needSelect ? (r)=> {
-                   return F.getActiveCls(isCurrPage && currActive == F.genKey(r,'fee'))
+                   return F.getActiveCls(isCurrPage && currActive == F.genKey(r, 'fee'))
                  } : ()=>''}
                  pagination={false}
                  scroll={{y: 300}}/>
