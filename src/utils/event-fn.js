@@ -4,6 +4,21 @@ import * as S from '../services/Content'
 import {message} from 'antd'
 
 export default {
+  *f8Fn(state, {call, put, select}, event) {
+
+    const {selectPls} = state
+    if (selectPls.length !== 1) {
+      message.error('请选择一个旅客')
+      return
+    }
+
+    const fees = F.upperCase(yield call(S.fetchFees, {pl: selectPls[0]}))
+    if (!fees || fees.feeMsg.length == 0) {
+      message.error('该旅客没有行李收费信息')
+      return
+    }
+    yield put({type: 'showCancelFee', fees})
+  },
   *alt3Fn(state, {call, put, select}, event) {
     const {selectPls} = state
     if (selectPls.length !== 1 || !selectPls[0].wci) {

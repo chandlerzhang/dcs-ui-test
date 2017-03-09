@@ -21,6 +21,7 @@ import MApi from '../components/MApi'
 import Log from '../components/Log'
 import PbAdd from '../components/PbAdd'
 import PbDel from '../components/PbDel'
+import CancelFee from '../components/CancelFee'
 
 const renderComp = (props)=> {
   const {content, dispatch} = props
@@ -145,17 +146,23 @@ const renderComp = (props)=> {
       const pbDelProps = {
         currBlock, currActive, pageName,
         pbs: content.serverData,
-        rowSelection: {
-          selectedRowKeys: [currActive],
-          onChange: (selectedRowKeys, selectedRows) => {
-          },
-          onSelect: (record, selected, selectedRows) => {
-          },
-          onSelectAll: (selected, selectedRows, changeRows) => {
-          },
-        }
+        needSelect: true
       }
       return <PbDel {...pbDelProps}/>
+
+    case C.PAGE_CANCEL_FEE:
+
+      if (selectPls.length !== 1) {
+        message.error('请选择一个旅客')
+        return null
+      }
+      const cancelFeeProps = {
+        currBlock, currActive, pageName,
+        fees: content.serverData.feeMsg,
+        needSelect: true
+      }
+
+      return <CancelFee {...cancelFeeProps}/>
   }
 }
 

@@ -7,7 +7,7 @@ import {
 } from 'antd';
 const FormItem = Form.Item;
 
-export default class PbDel extends React.Component {
+export default class CancelFee extends React.Component {
   constructor() {
     super()
 
@@ -26,8 +26,7 @@ export default class PbDel extends React.Component {
         selected
       })
     } else {
-
-      const selected = this.state.selected.filter(pb=>pb.uui !== record.uui)
+      const selected = this.state.selected.filter(pb=>pb.id !== record.id)
       this.setState({
         ...this.state,
         selected
@@ -45,16 +44,12 @@ export default class PbDel extends React.Component {
 
   render() {
 
-    const {pbs, needSelect, currBlock, currActive, pageName} = this.props
+    const {fees, needSelect, currBlock, currActive, pageName} = this.props
 
-    // const needSelect = !!rowSelection
-    const isCurrPage = pageName === C.PAGE_PB_DEL && currBlock === C.MAIN_BLOCK
-
-    //todo 需要处理小数计算不准确
-    const allWeight = pbs.reduce((p1, p2)=> (p1.bw || p1) + p2.bw)
+    const isCurrPage = pageName === C.PAGE_CANCEL_FEE && currBlock === C.MAIN_BLOCK
 
     const rowSelection = {
-      selectedRowKeys: this.state.selected.map(pb=>F.genPbKey(pb)),
+      selectedRowKeys: this.state.selected.map(pb=>F.genKey(pb,'fee')),
       onChange: (selectedRowKeys, selectedRows) => {
       },
       onSelect: this.onSelect.bind(this),
@@ -64,28 +59,29 @@ export default class PbDel extends React.Component {
     return <div className="modify-api-page">
       <Row>
         <Col span={24} className="add-passenger-header">
-          旅客-删除旅客行李
+          旅客-取消行李收费
         </Col>
       </Row>
       <Row>
         <Col span={24}>
 
           <Table className="dcs-pl-table"
-                 title={(o)=> <span><span className="dcs-circle">i</span>行李数量<span
-                   className="dcs-pl-table-num">{pbs.length}</span>，总重<span
-                   className="dcs-pl-table-num">{allWeight}</span>kg</span>}
-                 rowKey={pl=>F.genPbKey(pl)}
+                 title={(o)=> <span><span className="dcs-circle">i</span>共<span
+                   className="dcs-pl-table-num">{fees.length}</span>项费用，已选择<span
+                   className="dcs-pl-table-num">{this.state.selected.length}</span>项</span>}
+                 rowKey={pl=>F.genKey(pl,'fee')}
                  rowSelection={needSelect ? rowSelection : null}
                  columns={[
-                   {title: '目的站', dataIndex: 'ds', key: '2', width: 150},
-                   {title: '行李号', dataIndex: 'bsn', key: '3', width: 150},
-                   {title: '重量', dataIndex: 'bw', key: '4', width: 150},
+                   {title: '订单号', dataIndex: 'obn', key: '2', width: 150},
+                   {title: '首件实收（元）', dataIndex: 'acnt', key: '2', width: 150},
+                   {title: '重量（KG）', dataIndex: 'bw', key: '3', width: 150},
+                   {title: '逾重收费（元）', dataIndex: 'bcnt', key: '4', width: 150},
                  ]}
-                 dataSource={pbs}
+                 dataSource={fees}
                  onRowClick={()=> {
                  }}
                  rowClassName={needSelect ? (r)=> {
-                   return F.getActiveCls(isCurrPage && currActive == F.genPbKey(r))
+                   return F.getActiveCls(isCurrPage && currActive == F.genKey(r,'fee'))
                  } : ()=>''}
                  pagination={false}
                  scroll={{y: 300}}/>
@@ -95,7 +91,7 @@ export default class PbDel extends React.Component {
         <Col span={24} style={{marginTop: '10px'}}>
           <FormItem wrapperCol={{span: 12, offset: 12}}>
             <Button className={F.getActiveCls(isCurrPage && currActive == C.SUBMIT_BTN_KEY)} type="primary"
-                    htmlType="submit">删除</Button>
+                    htmlType="submit">提交</Button>
           </FormItem>
         </Col>
       </Row> : null}

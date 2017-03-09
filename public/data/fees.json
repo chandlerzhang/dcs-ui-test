@@ -1,0 +1,34 @@
+{
+  "bwAll": "0.0",
+  "all": 0,
+  "passRi": "lofxjs",
+  "flag": "true",
+  "af": "1200",
+  "feeMsg": [
+    {
+      "id": 1,
+      "actp": "1",
+      "bctp": "2",
+      "con": "",
+      "acnt": "-2",
+      "bw": "-2.0",
+      "bcnt": "-36",
+      "obn": "shaccc0170421479192",
+      "allmoney": -38
+    },
+    {
+      "id": 2,
+      "actp": "1",
+      "bctp": "2",
+      "con": "shaccc0170421479192",
+      "acnt": "2",
+      "bw": "2.0",
+      "bcnt": "36",
+      "obn": "shaccc0170421342154",
+      "allmoney": 38
+    }
+  ],
+  "firstAll": 0,
+  "ak": "80",
+  "secondAll": 0
+}

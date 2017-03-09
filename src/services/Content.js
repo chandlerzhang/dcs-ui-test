@@ -72,3 +72,9 @@ export async function fetchPbs(p) {
     method: 'get'
   })
 }
+
+export async function fetchFees(p) {
+  return F.request('./data/fees.json', {
+    method: 'get'
+  })
+}

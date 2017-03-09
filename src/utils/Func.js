@@ -489,10 +489,15 @@ export function genBindingInfPlKey(pl) {
 
 export function genLogKey(log) {
 
-  return `log-key-${log.id}`
+  return genKey(log,'log')
 }
 
 export function genPbKey(pb) {
 
-  return `pb-key-${pb.id}`
+  return genKey(pb,'pb')
+}
+
+export function genKey(obj, t) {
+
+  return `${t}-key-${obj.id}`
 }

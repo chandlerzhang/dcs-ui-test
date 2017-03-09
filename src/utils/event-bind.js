@@ -70,7 +70,7 @@ export default [{
   funcName: 'alt1Fn'
 
 }, {
-  isMatch: (e)=>e.which == 51 && e.altKey,
+  isMatch: (e)=>e.which == 119 ,
   async: true,
-  funcName: 'alt3Fn'
+  funcName: 'f8Fn'
 }]

@@ -49,6 +49,7 @@ export const PAGE_MODIFY_API = 'PAGE_MODIFY_API'
 export const PAGE_LOG_LIST = 'PAGE_LOG_LIST'
 export const PAGE_PB_ADD = 'PAGE_PB_ADD'
 export const PAGE_PB_DEL = 'PAGE_PB_DEL'
+export const PAGE_CANCEL_FEE = 'PAGE_CANCEL_FEE'
 
 /**
  * 提交按钮通用Key
