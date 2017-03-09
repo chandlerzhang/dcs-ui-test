@@ -1,9 +1,10 @@
 import React from 'react'
 import * as F from '../utils/Func'
 import * as C from '../utils/Const'
+import PbDel from './PbDel'
 import {
   Form,
-  Button, Input, Row, Col, Radio, Checkbox, Table
+  Button, Input, Row, Col, Radio, Checkbox
 } from 'antd';
 const FormItem = Form.Item;
 const RadioGroup = Radio.Group;
@@ -17,9 +18,6 @@ export default class PbAdd extends React.Component {
       wrapperCol: {span: 14},
     }
     const isCurrPage = pageName === C.PAGE_PB_ADD && currBlock === C.MAIN_BLOCK
-
-    //todo 需要处理小数计算不准确
-    const allWeight = pbs.reduce((p1, p2)=> (p1.bw || p1) + p2.bw)
 
     return <div>
       <Row>
@@ -88,21 +86,7 @@ export default class PbAdd extends React.Component {
         </Col>
         <Col span={12}>
 
-          <Table className="dcs-pl-table"
-                 title={(o)=> <span><span className="dcs-circle">i</span>行李数量<span
-                   className="dcs-pl-table-num">{pbs.length}</span>，总重<span
-                   className="dcs-pl-table-num">{allWeight}</span>kg</span>}
-                 rowKey={pl=>`pb-item-${pl.id}`}
-                 columns={[
-                   {title: '目的站', dataIndex: 'ds', key: '2', width: 150},
-                   {title: '行李号', dataIndex: 'bsn', key: '3', width: 150},
-                   {title: '重量', dataIndex: 'bw', key: '4', width: 150},
-                 ]}
-                 dataSource={pbs}
-                 onRowClick={()=> {
-                 }}
-                 pagination={false}
-                 scroll={{y: 300}}/>
+          <PbDel pbs={pbs}/>
         </Col>
       </Row>
       <Row>

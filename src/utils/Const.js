@@ -48,6 +48,7 @@ export const PAGE_BINDING_INF = 'PAGE_BINDING_INF'
 export const PAGE_MODIFY_API = 'PAGE_MODIFY_API'
 export const PAGE_LOG_LIST = 'PAGE_LOG_LIST'
 export const PAGE_PB_ADD = 'PAGE_PB_ADD'
+export const PAGE_PB_DEL = 'PAGE_PB_DEL'
 
 /**
  * 提交按钮通用Key

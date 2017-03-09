@@ -20,6 +20,7 @@ import BindingInf from '../components/BindingInf'
 import MApi from '../components/MApi'
 import Log from '../components/Log'
 import PbAdd from '../components/PbAdd'
+import PbDel from '../components/PbDel'
 
 const renderComp = (props)=> {
   const {content, dispatch} = props
@@ -138,6 +139,23 @@ const renderComp = (props)=> {
       }
 
       return <PbAdd {...pbAddProps}/>
+
+    case C.PAGE_PB_DEL:
+
+      const pbDelProps = {
+        currBlock, currActive, pageName,
+        pbs: content.serverData,
+        rowSelection: {
+          selectedRowKeys: [currActive],
+          onChange: (selectedRowKeys, selectedRows) => {
+          },
+          onSelect: (record, selected, selectedRows) => {
+          },
+          onSelectAll: (selected, selectedRows, changeRows) => {
+          },
+        }
+      }
+      return <PbDel {...pbDelProps}/>
   }
 }
 

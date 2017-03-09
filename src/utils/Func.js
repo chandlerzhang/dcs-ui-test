@@ -491,3 +491,8 @@ export function genLogKey(log) {
 
   return `log-key-${log.id}`
 }
+
+export function genPbKey(pb) {
+
+  return `pb-key-${pb.id}`
+}
