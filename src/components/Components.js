@@ -19,6 +19,7 @@ import ManualProtect from '../components/ManualProtect'
 import BindingInf from '../components/BindingInf'
 import MApi from '../components/MApi'
 import Log from '../components/Log'
+import PbAdd from '../components/PbAdd'
 
 const renderComp = (props)=> {
   const {content, dispatch} = props
@@ -127,6 +128,16 @@ const renderComp = (props)=> {
       }
 
       return <Log {...logProps}/>
+
+    case C.PAGE_PB_ADD:
+
+      const pbAddProps = {
+        currBlock, currActive, pageName,
+        pbs: content.serverData,
+        dss: [token.fl.ds]
+      }
+
+      return <PbAdd {...pbAddProps}/>
   }
 }
 

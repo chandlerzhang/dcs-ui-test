@@ -4,6 +4,17 @@ import * as S from '../services/Content'
 import {message} from 'antd'
 
 export default {
+  *alt1Fn(state, {call, put, select}, event) {
+
+    const {selectPls} = state
+    if (selectPls.length !== 1 || !selectPls[0].wci) {
+      message.error('请选择一个已值机旅客')
+      return
+    }
+
+    const pbs = F.upperCase(yield call(S.fetchPbs, {pl: selectPls[0]}))
+    yield put({type: 'showPbAdd', pbs})
+  },
   *alt0Fn(state, {call, put, select}, event) {
 
     const {selectPls} = state

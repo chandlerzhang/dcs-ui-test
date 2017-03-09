@@ -71,10 +71,11 @@ export function getActiveCls(isActive, originCls, ele) {
 
 export function indexOf(arr, obj) {
 
-  for (let i = 0; i < arr.length; i++) {
-    if (arr[i] == obj) return i
-  }
-  return -1;
+  // for (let i = 0; i < arr.length; i++) {
+  //   if (arr[i] == obj) return i
+  // }
+  // return -1;
+  return arr.indexOf(obj)
 }
 
 export function stopEvent(e) {

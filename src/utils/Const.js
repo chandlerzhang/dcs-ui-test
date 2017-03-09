@@ -47,6 +47,7 @@ export const PAGE_MANUAL_PROTECT = 'PAGE_MANUAL_PROTECT'
 export const PAGE_BINDING_INF = 'PAGE_BINDING_INF'
 export const PAGE_MODIFY_API = 'PAGE_MODIFY_API'
 export const PAGE_LOG_LIST = 'PAGE_LOG_LIST'
+export const PAGE_PB_ADD = 'PAGE_PB_ADD'
 
 /**
  * 提交按钮通用Key
@@ -104,5 +105,10 @@ export const MAPI_STYLE_KEY = 'MAPI_STYLE_KEY'
 export const MAPI_TTYPE_KEY = 'MAPI_TTYPE_KEY'
 export const MAPI_TNUMBER_KEY = 'MAPI_TNUMBER_KEY'
 export const MAPI_PASSPORT_KEY = 'MAPI_PASSPORT_KEY'
+
+export const PBADD_USEID_KEY = 'PBADD_USEID_KEY'
+export const PBADD_ID_KEY = 'PBADD_ID_KEY'
+export const PBADD_WEIGHT_KEY = 'PBADD_WEIGHT_KEY'
+export const PBADD_NOPRINT_KEY = 'PBADD_NOPRINT_KEY'
 
 

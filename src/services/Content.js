@@ -66,3 +66,9 @@ export async function fetchLogs(p) {
     method: 'get'
   })
 }
+
+export async function fetchPbs(p) {
+  return F.request('./data/pbs.json', {
+    method: 'get'
+  })
+}

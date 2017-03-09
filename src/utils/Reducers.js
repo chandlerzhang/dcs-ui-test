@@ -3,6 +3,24 @@ import * as C from '../utils/Const'
 import Evt from '../utils/event-fn'
 
 export default {
+  showPbAdd(state, {pbs}){
+
+    // const dsKey = `pb-ds-${state.token.fl.ds}`
+    const newComps = [C.PBADD_USEID_KEY, C.PBADD_ID_KEY, C.PBADD_WEIGHT_KEY, C.PBADD_NOPRINT_KEY, C.SUBMIT_BTN_KEY]
+    const comps = {
+      ...state.comps,
+      [C.MAIN_BLOCK]: newComps
+    }
+
+    return {
+      ...state,
+      currBlock: C.MAIN_BLOCK,
+      currActive: newComps[0],
+      comps,
+      pageName: C.PAGE_PB_ADD,
+      serverData: pbs
+    }
+  },
   showLogs(state, {logs}){
 
     const newComps = logs.map((log, i)=> {
