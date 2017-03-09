@@ -409,7 +409,7 @@ export function calculateCurrPage(index, pagenum) {
  * @returns {boolean}
  */
 export function isPaginationTable(currBlock, pageName) {
-  return currBlock === C.MAIN_BLOCK && pageName === C.PAGE_PASSENGER_LIST
+  return currBlock === C.MAIN_BLOCK && (pageName === C.PAGE_PASSENGER_LIST || pageName === C.PAGE_LOG_LIST)
 }
 
 /**
@@ -426,11 +426,15 @@ export function activeMoveTo(offset, state) {
     console.error('comps is empty~~')
     return state
   }
+  const pageNumField = pageName === C.PAGE_PASSENGER_LIST ? 'plPageNum' : 'otherPageNum'
+  const currPageField = pageName === C.PAGE_PASSENGER_LIST ? 'plCurrPage' : 'otherCurrPage'
+
   //如果当前焦点在命令框上，按上下方向键则直接定位到第一个元素
   if (currActive === C.CMD_INPUT) {
     return {
       ...state,
-      currActive: comps[0]
+      currActive: comps[0],
+      [currPageField]: 1
     }
   }
   let index = indexOf(comps, currActive)
@@ -450,11 +454,12 @@ export function activeMoveTo(offset, state) {
 
     //如果当前是分页表格，则根据当前焦点计算当前页码
     if (isPaginationTable(currBlock, pageName)) {
-      const currPage = calculateCurrPage(index, plPageNum)
+
+      const currPage = calculateCurrPage(index, state[pageNumField])
       return {
         ...state,
         currActive: comps[index],
-        plCurrPage: currPage
+        [currPageField]: currPage
       }
     }
 

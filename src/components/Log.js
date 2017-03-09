@@ -1,5 +1,5 @@
 import React from 'react'
-import {Table, Pagination} from 'antd'
+import {Table} from 'antd'
 import * as F from '../utils/Func'
 import * as C from '../utils/Const'
 
@@ -7,7 +7,7 @@ export default class Log extends React.Component {
 
   render() {
 
-    const {currBlock, currActive, pageName, logs} = this.props
+    const {currBlock, currActive, pageName, logs, otherCurrPage, otherPageNum} = this.props
     const isCurrPage = pageName === C.PAGE_LOG_LIST && currBlock === C.MAIN_BLOCK
 
     const rowSelection = {
@@ -26,20 +26,27 @@ export default class Log extends React.Component {
       {title: '操作时间', dataIndex: 'ct', key: '4', width: 150},
     ];
 
+    const pagination = {
+      current: otherCurrPage,
+      pageSize: otherPageNum
+    }
+
+    logs.map((log, i)=> {
+      log.id = i
+      return log
+    })
+
     return <Table className="dcs-pl-table"
                   title={(o)=> <span><span className="dcs-circle">i</span>共<span
                     className="dcs-pl-table-num">{logs.length}</span>条日志数据</span>}
-                  rowKey={(pl,i)=>{
-                    pl.id = i
-
-                    return F.genLogKey(pl)
-                  }}
+                  rowKey={pl=>F.genLogKey(pl)}
                   rowSelection={rowSelection}
                   columns={columns}
                   dataSource={logs}
-                  onRowClick={()=>{}}
+                  onRowClick={()=> {
+                  }}
                   expandedRowKeys={[currActive || '']}
-                  pagination={false}
+                  pagination={pagination}
                   rowClassName={(r)=> {
                     return F.getActiveCls(isCurrPage && currActive == F.genLogKey(r))
                   }}

@@ -22,7 +22,7 @@ import Log from '../components/Log'
 
 const renderComp = (props)=> {
   const {content, dispatch} = props
-  const {pls, pageName, token, currActive, currBlock, selectPls} = content
+  const {pls, pageName, token, currActive, currBlock, selectPls, otherCurrPage, otherPageNum} = content
   switch (pageName) {
 
     case C.PAGE_PASSENGER_LIST:
@@ -122,7 +122,7 @@ const renderComp = (props)=> {
     case C.PAGE_LOG_LIST:
 
       const logProps = {
-        currBlock, currActive, pageName,
+        currBlock, currActive, pageName, otherCurrPage, otherPageNum,
         logs: content.serverData
       }
 

@@ -140,6 +140,8 @@ Content.PropTypes = {
   comps: React.PropTypes.object,
   plPageNum: React.PropTypes.number,
   plCurrPage: React.PropTypes.number,
+  otherPageNum: React.PropTypes.number,
+  otherCurrPage: React.PropTypes.number,
   flightSwitchPageNum: React.PropTypes.number,
   flightSwitchCurrPage: React.PropTypes.number,
   passengerSelectPageNum: React.PropTypes.number,

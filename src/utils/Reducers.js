@@ -5,7 +5,7 @@ import Evt from '../utils/event-fn'
 export default {
   showLogs(state, {logs}){
 
-    const newComps = logs.map((log,i)=>{
+    const newComps = logs.map((log, i)=> {
       log.id = i
       return F.genLogKey(log)
     })
@@ -19,11 +19,12 @@ export default {
       currBlock: C.MAIN_BLOCK,
       currActive: newComps[0],
       comps,
-      serverData: logs
+      serverData: logs,
+      otherCurrPage: 1
     }
   },
   normalEsc(state){
-    const {pageName, currActive} = state
+    const {pageName, currActive, selectPls} = state
 
     if (pageName !== C.PAGE_PASSENGER_LIST && currActive !== C.CMD_INPUT) {
       return {
@@ -46,9 +47,10 @@ export default {
     return {
       ...state,
       currBlock: C.MAIN_BLOCK,
-      currActive: C.CMD_INPUT,
+      currActive: selectPls.length > 0 && pageName !== C.PAGE_PASSENGER_LIST ? F.genPlKey(selectPls[0]) : C.CMD_INPUT,
       pageName: C.PAGE_PASSENGER_LIST,
-      comps, confirm
+      comps, confirm,
+      otherCurrPage: 1
     }
   },
   updateAfterSetMOrC(state, {pl}){

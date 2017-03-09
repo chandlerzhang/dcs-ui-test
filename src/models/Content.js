@@ -21,8 +21,11 @@ export default {
 
     serverData: null,//data from server,work for all other pages
 
-    plPageNum: 10,
-    plCurrPage: 1,
+    plPageNum: 10,//旅客列表每页显示数目
+    plCurrPage: 1,//旅客列表当前页码
+
+    otherPageNum: 10,//其他列表每页显示数目
+    otherCurrPage: 1,//其他列表当前页码
 
     flightSwitchPageNum: 8,
     flightSwitchCurrPage: 1,
