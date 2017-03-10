@@ -3,8 +3,9 @@ import {connect} from 'dva'
 import Bottom from './Bottom.js'
 import Header from './Header.js'
 import FlightTab from './FlightTab'
+import FlightStatus from './FlightStatus'
+import FlightContainer from './FlightContainer'
 import styles from './main.css'
-
 
 class Main extends React.Component {
 
@@ -18,12 +19,13 @@ class Main extends React.Component {
 				<Header />
 				<div className={styles.container}>
 					<FlightTab />
+					<FlightStatus />
+					<FlightContainer />
 				</div>
 				<Bottom />
 			</div>
 		)
 	}
 }
-
 
 export default  connect()(Main);
