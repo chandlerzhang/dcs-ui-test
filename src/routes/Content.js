@@ -94,15 +94,19 @@ class Content extends React.Component {
     }
 
     if (isLogin) {
+      const flightStatusProps = {
+        fl: token.fl,
+        currBlock, currActive
+      }
 
       return <div className="dcs-main">
-        <div className="dcs-header">
+        <div className="dcs-header topWrapper">
 
           <Header {...headerProps}/>
         </div>
         <div className="dcs-center">
           {fls && fls.length > 0 ? <PSelect {...fSwitchProps}/> : null}
-          <FStatus fl={token.fl}/>
+          <FStatus {...flightStatusProps}/>
           {selectPls && selectPls.length > 0 ?
             <PSelect {...passengerSelectProps} /> : null}
           {operationBtns && operationBtns.length > 0 ? <PSelect {...passengerOprProps} /> : null}

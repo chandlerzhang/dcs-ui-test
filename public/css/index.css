@@ -9,6 +9,8 @@ body {
 
 .dcs-main {
   height: 100%;
+  width: 1000px;
+  margin: 0 auto;
 }
 
 .dcs-header {
@@ -138,7 +140,7 @@ body {
 }
 
 .dcs-pselect-item-button {
-  margin: auto 10px;
+  /*margin: auto 10px;*/
   padding: 5px 5px;
 }
 
@@ -157,6 +159,10 @@ body {
 
 .dcs-pl-table .ant-table-header {
   /*margin-bottom: 0 !important;*/
+}
+
+.dcs-pl-table .ant-table-title{
+  padding: 8px !important;
 }
 
 .dcs-col-right {

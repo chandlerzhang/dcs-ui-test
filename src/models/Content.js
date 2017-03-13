@@ -33,7 +33,7 @@ export default {
     passengerSelectPageNum: 10,
     passengerSelectCurrPage: 1,
 
-    passengerOperationPageNum: 8,
+    passengerOperationPageNum: 6,
     passengerOperationCurrPage: 1,
 
     confirm: {

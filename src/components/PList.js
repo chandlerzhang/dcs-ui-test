@@ -26,13 +26,13 @@ export default class PList extends React.Component {
           </span>
         },
       },
-      {title: '姓名', dataIndex: 'cn', key: '1', width: 150},
-      {title: '性质', dataIndex: 'sex', key: '2', width: 150},
-      {title: '订单号', dataIndex: 'orn', key: '3', width: 150},
-      {title: '座位', dataIndex: 'sea', key: '4', width: 150},
-      {title: '目的地', dataIndex: 'ds', key: '5', width: 150},
-      {title: '免额行李', dataIndex: 'fbw', key: '6', width: 150},
-      {title: '行李重量', dataIndex: 'tbw', key: '7', width: 150},
+      {title: '姓名', dataIndex: 'cn', key: '1', width: 100},
+      {title: '性质', dataIndex: 'sex', key: '2', width: 50},
+      {title: '订单号', dataIndex: 'orn', key: '3', width: 100},
+      {title: '座位', dataIndex: 'sea', key: '4', width: 50},
+      {title: '目的地', dataIndex: 'ds', key: '5', width: 100},
+      {title: '免额行李', dataIndex: 'fbw', key: '6', width: 100},
+      {title: '行李重量', dataIndex: 'tbw', key: '7', width: 100},
       {title: '服务', dataIndex: 'osi', key: '8'},
     ];
 

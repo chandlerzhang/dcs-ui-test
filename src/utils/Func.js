@@ -111,7 +111,7 @@ export function headerRenderData(props) {
   const isMenuBlock = currBlock == C.TOPMENU_BLOCK
   const isInputActive = currActive == C.CMD_INPUT
   const input = <Input placeholder="input here" style={{width: '100%'}}
-                       className={getActiveCls(isInputActive, 'header-autocomplete')}/>
+                      className={getActiveCls(isInputActive, 'header-autocomplete')}/>
 
   const btns = [{
     text: '航段',
@@ -489,12 +489,12 @@ export function genBindingInfPlKey(pl) {
 
 export function genLogKey(log) {
 
-  return genKey(log,'log')
+  return genKey(log, 'log')
 }
 
 export function genPbKey(pb) {
 
-  return genKey(pb,'pb')
+  return genKey(pb, 'pb')
 }
 
 export function genKey(obj, t) {

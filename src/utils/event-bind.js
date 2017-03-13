@@ -77,4 +77,7 @@ export default [{
   isMatch: (e)=>e.which == 85 && e.altKey ,
   async: true,
   funcName: 'altUFn'
+}, {
+  isMatch: (e)=>e.which == 114 ,
+  funcName: 'f3Fn'
 }]

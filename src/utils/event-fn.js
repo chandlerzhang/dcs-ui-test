@@ -130,6 +130,21 @@ export default {
 
     yield put({type: 'showBindingInf', infs: infs || []})
   },
+  f3Fn(state) {
+
+    const newComps = [C.FSTATUS_SHOWDETAIL_KEY]
+    const comps = {
+      ...state.comps,
+      [C.FLIGHT_STATUS_BLOCK]: newComps
+    }
+
+    return {
+      ...state,
+      currBlock: C.FLIGHT_STATUS_BLOCK,
+      currActive: newComps[0],
+      comps
+    }
+  },
   altF3Fn(state, event) {
 
     const {selectPls} = state

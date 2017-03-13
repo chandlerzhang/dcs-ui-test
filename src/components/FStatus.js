@@ -1,14 +1,17 @@
 import React from 'react'
+import * as C from '../utils/Const'
+import * as F from '../utils/Func'
 
 export default class FStatus extends React.Component {
 
   render() {
 
-    const {fl} = this.props
+    const {fl, currBlock, currActive} = this.props
+    const isCurrBlock = currBlock === C.FLIGHT_STATUS_BLOCK
 
     return <div className="ant-row dcs-pselect">
       <div className="ant-col-23">
-        <span className="dcs-pselect-title">航班状态：</span>
+        <span className="dcs-pselect-title">航班状态（F3）：</span>
         <span className="dcs-icon-left dcs-icon-disabled">
           <img src="./img/u337.png" width="16"/>
         </span>
@@ -23,8 +26,10 @@ export default class FStatus extends React.Component {
         </span>
       </div>
       <div className="ant-col-1">
-        <span className="dcs-icon-right dcs-icon-disabled">
-          <img src="./img/u337.png" width="16"/>
+        <span className="dcs-icon-right ">
+          <a href="javascript:void(0);"
+             className={F.getActiveCls(isCurrBlock && currActive === C.FSTATUS_SHOWDETAIL_KEY)}><img
+            src="./img/u337.png" width="16"/></a>
         </span>
       </div>
     </div>
