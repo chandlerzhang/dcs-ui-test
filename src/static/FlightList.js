@@ -1,81 +1,88 @@
 import React from 'react' 
 import styles from './main.css'
 import {Row , Col , Checkbox , Icon} from 'antd'
+import FlightDetail from './FlightDetail'
 
 export default class FlightList extends React.Component {
 
-	render () {
-		// const columns = [
-		// 	 { title: '状态', dataIndex: 'status', key: 'status' , width:80 },
-		// 	 { title: '序号', dataIndex: 'no', key: 'no' , width:80},
-		// 	 { title: '姓名', dataIndex: 'name', key: 'name' , width:150},
-		// 	 { title: '性质', dataIndex: 'nature', key: 'nature' , width:80},
-		// 	 { title: '订单号', dataIndex: 'orderNo', key: 'orderNo' , width:180},
-		// 	 { title: '座位', dataIndex: 'seatNo', key: 'seatNo' , width:80},
-		// 	 { title: '目的地', dataIndex: 'destination', key: 'destination' , width:100},
-		// 	 { title: '免额行李', dataIndex: 'freeBaggage', key: 'freeBaggage', width:150 },
-		// 	 { title: '行李/重量', dataIndex: 'weight', key: 'weight', width:80},
-		// 	 { title: '服务', dataIndex: 'service', key: 'service' , width:100}
-		// ]
+	constructor (props) {
+		super(props);
+		this.state = {
+			selected:0 ,
+		}
+	}
 
-		const data = [
-			{key:1 , status:'退，AC', no:'123' ,name:'ZHANG SAN', nature:'成人' , orderNo:'Ed30d3jd95653' , seatNo:'22B' , destination:'MWN',freeBaggage:'25 KA=0',weight:'15kg' , service:'VIP'},
-			{key:2 , status:'退，AC', no:'124' ,name:'ZHANG SAN', nature:'成人' , orderNo:'Ed30d3jd95653' , seatNo:'22B' , destination:'MWN',freeBaggage:'25 KA=0',weight:'15kg' , service:'VIP'},
-			{key:3 , status:'退，AC', no:'125' ,name:'ZHANG SAN', nature:'成人' , orderNo:'Ed30d3jd95653' , seatNo:'22B' , destination:'MWN',freeBaggage:'25 KA=0',weight:'15kg' , service:'VIP'},
-			{key:4 , status:'退，AC', no:'126' ,name:'ZHANG SAN', nature:'成人' , orderNo:'Ed30d3jd95653' , seatNo:'22B' , destination:'MWN',freeBaggage:'25 KA=0',weight:'15kg' , service:'VIP'},
-			{key:5 , status:'退，AC', no:'127' ,name:'ZHANG SAN', nature:'成人' , orderNo:'Ed30d3jd95653' , seatNo:'22B' , destination:'MWN',freeBaggage:'25 KA=0',weight:'15kg' , service:'VIP'},
-			{key:6 , status:'退，AC', no:'128' ,name:'ZHANG SAN', nature:'成人' , orderNo:'Ed30d3jd95653' , seatNo:'22B' , destination:'MWN',freeBaggage:'25 KA=0',weight:'15kg' , service:'VIP'},
-			{key:7 , status:'退，AC', no:'129' ,name:'ZHANG SAN', nature:'成人' , orderNo:'Ed30d3jd95653' , seatNo:'22B' , destination:'MWN',freeBaggage:'25 KA=0',weight:'15kg' , service:'VIP'},
-			{key:8 , status:'退，AC', no:'130' ,name:'ZHANG SAN', nature:'成人' , orderNo:'Ed30d3jd95653' , seatNo:'22B' , destination:'MWN',freeBaggage:'25 KA=0',weight:'15kg' , service:'VIP'},
-			{key:9 , status:'退，AC', no:'131' ,name:'ZHANG SAN', nature:'成人' , orderNo:'Ed30d3jd95653' , seatNo:'22B' , destination:'MWN',freeBaggage:'25 KA=0',weight:'15kg' , service:'VIP'},
-			{key:10 , status:'退，AC', no:'132' ,name:'ZHANG SAN', nature:'成人' , orderNo:'Ed30d3jd95653' , seatNo:'22B' , destination:'MWN',freeBaggage:'25 KA=0',weight:'15kg' , service:'VIP'}
-		]
-		// <Table
-		// 	    columns={columns}
-		// 	    expandedRowRender={record => <p>{record.destination}</p>}
-		// 	    dataSource={data}
-		// 	    pagination={{ pageSize: 50 }} scroll={{ y: 400 }} 
-		// 	    bordered
-  //   			size="middle"
-  // 			/>
-  		const rows = [] ;
+	componentDidMount = () => {
+		this.props.dispatch({type:'flight/query'})
+	}
+	
+	/*
+		显示/隐藏 航班详细面板
+	*/
+	toggleDetailPanel (i , flight , e) {
+		let el = e.target.parentNode.parentNode.parentNode.childNodes[2*i+1] ;
+		let visible = el.style.display ;
+		el.style.display = visible === 'none' || !visible ? 'block' :'none';
+	}
+
+	handleSelectP = (e) => {
+		let isSelected = e.target.checked ;
+		this.setState ((preState , props) => ({
+			selected: isSelected ? preState.selected + 1:preState.selected - 1 
+		}))
+	}
+
+	render () {
+
+		const { contentHeight , paddingRight , data } = this.props.flight ;
+		
+		const list = [];
   		for(let i = 0 ; i < data.length ; i++) {
   			let flight = data[i];
-  			rows.push(
-  				<Row className={styles.flightRow}>
-  					<Col span={1}><Checkbox /></Col>
+  			list.push(
+  				<Row className={styles.flightRow} key={flight.no}>
+  					<Col span={1}><Checkbox onChange={this.handleSelectP}/></Col>
 				 	<Col span={2}>{flight.status}</Col>
-				 	<Col span={1}>{flight.no}</Col>
+				 	<Col span={2}>{flight.no}</Col>
 				 	<Col span={3}>{flight.name}</Col>
 				 	<Col span={2}>{flight.nature}</Col>
 				 	<Col span={4}>{flight.orderNo}</Col>
-				 	<Col span={2}>{flight.seatNo}</Col>
+				 	<Col span={1}>{flight.seatNo}</Col>
 				 	<Col span={2}>{flight.destination}</Col>
 				 	<Col span={2}>{flight.freeBaggage}</Col>
 				 	<Col span={2}>{flight.weight}</Col>
 				 	<Col span={2}>{flight.service}</Col>
-				 	<Col span={1}></Col>
+				 	<Col span={1}>
+				 		<Icon type="plus-square-o" className={styles.itemExpandIcon} onClick={this.toggleDetailPanel.bind(this , i , flight)}/>
+				 	</Col>
   				</Row>
   			)
+  			list.push(<FlightDetail detail={flight.detail}/>)
   		}
 		return (
 			<div className={styles.flightList}>
-				 <Row className={styles.flightRow}>
-				 	<Col span={1}><Checkbox /></Col>
+				<div className={styles.flightListTitle}>
+					<Icon type="info-circle"/>
+					<span style={{marginLeft:'10px'}}>共&nbsp;<span style={{color:'#108EE9'}}>{data.length}</span>&nbsp;条旅客，已选择&nbsp;<span style={{color:'#108EE9'}}>{this.state.selected}</span>&nbsp;名旅客</span>
+				</div>
+				 <Row className={styles.flightRow + ' ' + styles.listTitle} style={{paddingRight:paddingRight}}>
+				 	<Col span={1}><Checkbox disabled /></Col>
 				 	<Col span={2}>状态</Col>
-				 	<Col span={1}>序号</Col>
+				 	<Col span={2}>序号</Col>
 				 	<Col span={3}>姓名</Col>
 				 	<Col span={2}>性质</Col>
 				 	<Col span={4}>订单号</Col>
-				 	<Col span={2}>座位</Col>
+				 	<Col span={1}>座位</Col>
 				 	<Col span={2}>目的地</Col>
 				 	<Col span={2}>免额行李</Col>
 				 	<Col span={2}>行李/重量</Col>
 				 	<Col span={2}>服务</Col>
 				 	<Col span={1}></Col>
 				 </Row>
-				 {rows}
-			 </div>
+				 <div className={styles.fligtsContent} style={{height:contentHeight}} ref="flightContent">
+				 	 {list}
+				 </div>
+			</div>
 		) 
 	}
 }

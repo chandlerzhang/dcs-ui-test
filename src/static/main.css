@@ -140,7 +140,6 @@ body{overflow: hidden;}
 
 .container {
 	width: 100%;
-	
 }
 
 .flightlist {
@@ -229,6 +228,7 @@ body{overflow: hidden;}
 .fligtMenu a:hover {
 	color:#108EE9;
 	border-bottom: 2px solid #108EE9;
+	line-height: 37px;
 }
 
 .flightStatusBar {
@@ -265,32 +265,68 @@ body{overflow: hidden;}
 	background-color: #F3F3F3 ;
 	color:#666666;
 }
+
+
+
 .flightList {
-	height: 470px;
-	overflow: auto;
-	margin-top: 5px;
+	margin-top: 10px;
 }
 .flightRow {
 	text-align: center;
 	line-height: 40px;
-	border-top: 1px solid #EBEBEB ;
-	border-left: 1px solid #EBEBEB ;
-	border-right: 1px solid #EBEBEB ;
+	border-bottom: 1px solid #EBEBEB ;
 }
+
+.listTitle {
+	background-color: #F4F4F4 ;
+	color:#666666;
+	font-size: 13px;
+	font-weight: bold;
+	border-bottom: none ;
+	padding-right: 17px;
+}
+
 .flightRow div {
-	height: 44px;
+	height: 40px;
 	text-align: center;
+	color:#6B6B6B;
 	border-right: 1px solid #EBEBEB ;
 }
 .flightRow div:last-child {
 	border-right: none ;
 }
-.flightRow:first-child {
-	background-color: #F4F4F4 ;
-	color:#666666;
-	font-size: 13px;
-	font-weight: bold;
+
+.itemExpandIcon:hover {
+	cursor: pointer;
 }
-.flightRow:last-child{
-	border-bottom: 1px solid #EBEBEB ;
+
+.flightListTitle {
+	height: 40px;
+	background-color: #E6F3FC ;
+	border: 1px solid #EBEBEB;
+	padding-left: 10px;
 }
+.flightListTitle span {
+	display: inline-block;
+	line-height: 38px ;
+	color:#6B6B6B;
+}
+.fligtsContent {
+	overflow: auto;
+	border: 1px solid #ebebeb ;
+}
+.fligtsContent div:hover {
+	background-color: #EEFFEE ;
+}
+.flightDetailRow {
+	border-bottom: 1px solid #EBEBEB;
+	padding-top: 5px;
+	display: none;
+}
+.flightDetailRow div {
+	line-height: 30px;
+}
+.rowLabel{
+	text-align: right;
+}
+

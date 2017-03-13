@@ -1,9 +1,11 @@
 import React from 'react' 
 import {Icon , Menu} from 'antd' 
 import styles from './main.css'
-import FlightInfo from './FlightInfo'
 import TabBar from './TabBar'
 
+/**
+ * 航班切换(F2)组件
+ */
 class FlightTab extends React.Component {
 
 	constructor () {
@@ -16,13 +18,7 @@ class FlightTab extends React.Component {
 
 	render() {
 		return (
-			<div>
-				<TabBar {...this.state}/>
-				<div>
-					<FlightInfo />
-				</div>
-			</div>
-			
+			<TabBar {...this.state}/>
 		)
 	}
 }

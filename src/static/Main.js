@@ -3,8 +3,9 @@ import {connect} from 'dva'
 import Bottom from './Bottom.js'
 import Header from './Header.js'
 import FlightTab from './FlightTab'
+import FlightStatus from './FlightStatus'
+import FlightContainer from './FlightContainer'
 import styles from './main.css'
-
 
 class Main extends React.Component {
 
@@ -18,6 +19,8 @@ class Main extends React.Component {
 				<Header />
 				<div className={styles.container}>
 					<FlightTab />
+					<FlightStatus dispatch={this.props.dispatch}/>
+					<FlightContainer {...this.props}/>
 				</div>
 				<Bottom />
 			</div>
@@ -25,5 +28,14 @@ class Main extends React.Component {
 	}
 }
 
+function mapStateToProps ({flight}) {
+	return {flight} ;
+}
 
-export default  connect()(Main);
+function mapDispatchToProps(dispatch) {
+	return {
+		'dispatch':(action) => dispatch(action),
+	}
+}
+
+export default  connect(mapStateToProps , mapDispatchToProps)(Main);
