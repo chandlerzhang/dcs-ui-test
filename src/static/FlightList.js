@@ -1,43 +1,29 @@
 import React from 'react' 
 import styles from './main.css'
 import {Row , Col , Checkbox , Icon} from 'antd'
+import FlightDetail from './FlightDetail'
 
 export default class FlightList extends React.Component {
 
 	constructor (props) {
 		super(props);
 		this.state = {
-			listStyle:{
-				height:0
-			},
-			contentStyle:{
-				height:0
-			},
-			total:this.props.flights.length,
 			selected:0 ,
-			paddingRight:'0px',
 		}
 	}
 
 	componentDidMount = () => {
-		let listHeight = window.innerHeight - 340 ;
-		let contentHeight = listHeight - 80 ;
-		this.setState ({
-			listStyle: {
-				height:listHeight+'px' 
-			},
-			contentStyle:{
-				height: contentHeight + 'px' ,
-			},
-			paddingRight: contentHeight >= this.state.total * 40 ? '0px' : '17px'
-		})
+		this.props.dispatch({type:'flight/query'})
 	}
 	
 	/*
 		显示/隐藏 航班详细面板
 	*/
-	toggleDetailPanel (i , flight) {
-		
+
+	toggleDetailPanel (i , flight , e) {
+		let el = e.target.parentNode.parentNode.parentNode.childNodes[2*i+1] ;
+		let visible = el.style.display ;
+		el.style.display = visible === 'none' || !visible ? 'block' :'none';
 	}
 
 	handleSelectP = (e) => {
@@ -48,9 +34,12 @@ export default class FlightList extends React.Component {
 	}
 
 	render () {
+
+		const { contentHeight , paddingRight , data } = this.props.flight ;
+		
 		const list = [];
-  		for(let i = 0 ; i < this.props.flights.length ; i++) {
-  			let flight = this.props.flights[i];
+  		for(let i = 0 ; i < data.length ; i++) {
+  			let flight = data[i];
   			list.push(
   				<Row className={styles.flightRow} key={flight.no}>
   					<Col span={1}><Checkbox onChange={this.handleSelectP}/></Col>
@@ -69,14 +58,15 @@ export default class FlightList extends React.Component {
 				 	</Col>
   				</Row>
   			)
+  			list.push(<FlightDetail detail={flight.detail}/>)
   		}
 		return (
-			<div className={styles.flightList} style={this.state.listStyle}>
+		<div className={styles.flightList}>
 				<div className={styles.flightListTitle}>
 					<Icon type="info-circle"/>
-					<span style={{marginLeft:'10px'}}>共&nbsp;<span style={{color:'#108EE9'}}>{this.state.total}</span>&nbsp;条旅客，已选择&nbsp;<span style={{color:'#108EE9'}}>{this.state.selected}</span>&nbsp;名旅客</span>
+					<span style={{marginLeft:'10px'}}>共&nbsp;<span style={{color:'#108EE9'}}>{data.length}</span>&nbsp;条旅客，已选择&nbsp;<span style={{color:'#108EE9'}}>{this.state.selected}</span>&nbsp;名旅客</span>
 				</div>
-				 <Row className={styles.flightRow + ' ' + styles.listTitle} style={{paddingRight:this.state.paddingRight}}>
+				 <Row className={styles.flightRow + ' ' + styles.listTitle} style={{paddingRight:paddingRight}}>
 				 	<Col span={1}><Checkbox disabled /></Col>
 				 	<Col span={2}>状态</Col>
 				 	<Col span={2}>序号</Col>
@@ -90,7 +80,7 @@ export default class FlightList extends React.Component {
 				 	<Col span={2}>服务</Col>
 				 	<Col span={1}></Col>
 				 </Row>
-				 <div className={styles.fligtsContent} style={this.state.contentStyle}>
+				 <div className={styles.fligtsContent} style={{height:contentHeight}} ref="flightContent">
 				 	 {list}
 				 </div>
 			</div>

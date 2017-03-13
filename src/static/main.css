@@ -274,9 +274,7 @@ body{overflow: hidden;}
 .flightRow {
 	text-align: center;
 	line-height: 40px;
-	border-top: 1px solid #EBEBEB ;
-	border-left: 1px solid #EBEBEB ;
-	border-right: 1px solid #EBEBEB ;
+	border-bottom: 1px solid #EBEBEB ;
 }
 
 .listTitle {
@@ -286,10 +284,6 @@ body{overflow: hidden;}
 	font-weight: bold;
 	border-bottom: none ;
 	padding-right: 17px;
-}
-
-.flightRow:last-child{
-	border-bottom: 1px solid #EBEBEB ;
 }
 
 .flightRow div {
@@ -302,7 +296,6 @@ body{overflow: hidden;}
 	border-right: none ;
 }
 
-
 .itemExpandIcon:hover {
 	cursor: pointer;
 }
@@ -310,9 +303,7 @@ body{overflow: hidden;}
 .flightListTitle {
 	height: 40px;
 	background-color: #E6F3FC ;
-	border-top: 1px solid #EBEBEB;
-	border-left: 1px solid #EBEBEB;
-	border-right: 1px solid #EBEBEB;
+	border: 1px solid #EBEBEB;
 	padding-left: 10px;
 }
 .flightListTitle span {
@@ -322,13 +313,15 @@ body{overflow: hidden;}
 }
 .fligtsContent {
 	overflow: auto;
+	border: 1px solid #ebebeb ;
 }
 .fligtsContent div:hover {
 	background-color: #EEFFEE ;
 }
 .flightDetailRow {
-	border-top: 1px solid #EBEBEB;
+	border-bottom: 1px solid #EBEBEB;
 	padding-top: 5px;
+	display: none;
 }
 .flightDetailRow div {
 	line-height: 30px;

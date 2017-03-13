@@ -6,9 +6,8 @@ import styles from './main.css'
  * 航班状态(F3)组件
  */
 export default class FlightStatus extends React.Component {
-
-	constructor() {
-		super();
+	constructor(props) {
+		super(props);
 		this.state = {
 			src:'./img/u337.png' ,
 			collapsePanelStyle:{
@@ -26,6 +25,10 @@ export default class FlightStatus extends React.Component {
 			collapsePanelStyle:{
 				display:display
 			}
+		})
+		this.props.dispatch({ 
+			type:'flight/calcContentHeight' , 
+			payload:display === 'none' ? false : true
 		})
 	}
 

@@ -19,8 +19,8 @@ class Main extends React.Component {
 				<Header />
 				<div className={styles.container}>
 					<FlightTab />
-					<FlightStatus />
-					<FlightContainer />
+					<FlightStatus dispatch={this.props.dispatch}/>
+					<FlightContainer {...this.props}/>
 				</div>
 				<Bottom />
 			</div>
@@ -28,4 +28,14 @@ class Main extends React.Component {
 	}
 }
 
-export default  connect()(Main);
+function mapStateToProps ({flight}) {
+	return {flight} ;
+}
+
+function mapDispatchToProps(dispatch) {
+	return {
+		'dispatch':(action) => dispatch(action),
+	}
+}
+
+export default  connect(mapStateToProps , mapDispatchToProps)(Main);

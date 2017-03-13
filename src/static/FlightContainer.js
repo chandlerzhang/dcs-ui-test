@@ -4,12 +4,11 @@ import styles from './main.css'
 import {Button} from 'antd'
 import FlightList from './FlightList'
 import POperationMenu from './POperationMenu'
-import flights from '../../public/data/flights.json'
 
 export default  class FlightContainer extends React.Component {
 
-	constructor() {
-		super();
+	constructor(props) {
+		super(props);
 		this.state = {
 			title:'已选旅客(F4)',
 			tabData:['ZHANG SAN','LI SI','WANG WU','ZHAO LIU']
@@ -21,7 +20,7 @@ export default  class FlightContainer extends React.Component {
 			<div>
 				<TabBar {...this.state}/>
 				<POperationMenu />
-			    <FlightList flights={flights}/>
+			    <FlightList {...this.props}/>
 			</div>
 		)
 	}
